@@ -1,0 +1,6 @@
+.DS_Store
+.pytest_cache
+.vscode
+__pycache__
+
+dataset
