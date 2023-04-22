@@ -2,9 +2,9 @@ import pandas as pd
 
 class GraphViz:
 
-    def __init__(self,df):
-        self.citation_table = df
-        self.year_empty_index = set(df[df['PY'].isna()].index)
+    def __init__(self,citation_table):
+        self.citation_table = citation_table
+        self.year_empty_index = set(citation_table[citation_table['PY'].isna()].index)
 
     def __obtain_groups(self):
         """obtain groups of docs by year"""
@@ -55,7 +55,7 @@ class GraphViz:
 
         return edge_list
         
-    def generate_dot_text(self,doc_indices,allow_external_node=False):
+    def generate_dot_file(self,doc_indices,allow_external_node=False):
         """生成dot文件
         doc_indices: 文献索引列表;
         allow_external_node: 是否允许出现doc_indices之外的节点，默认False
@@ -89,3 +89,15 @@ class GraphViz:
             dot_text += dot_edge
         dot_text += '}'
         return dot_text
+    
+    @staticmethod
+    def __extract_first_author(au_cell:str):
+        """提取一作"""
+        return au_cell.split(';',1)[0].replace(',','')
+    
+    def generate_graph_node_file(self)->pd.DataFrame:
+        use_cols = ['doc_index','AU','PY','SO','VL','BP','LCS','TC']
+        graph_node_table = self.citation_table.loc[self.node_list,use_cols]
+        graph_node_table['AU'] = graph_node_table['AU'].apply(self.__extract_first_author)
+        graph_node_table = graph_node_table.rename(columns={'TC':'GCS'})
+        return graph_node_table

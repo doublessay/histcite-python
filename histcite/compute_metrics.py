@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 
 class ComputeMetrics:
@@ -71,9 +72,12 @@ class ComputeMetrics:
         reference_table.loc[common_table['index'],'local'] = 1
         return reference_table
     
-    def write2excel(self,file_name):
+    def write2excel(self,save_path):
         """将统计结果写入excel"""
-        with pd.ExcelWriter(file_name) as writer:
+        save_folder_path = os.path.dirname(save_path)
+        if not os.path.exists(save_folder_path):
+            os.makedirs(save_folder_path)
+        with pd.ExcelWriter(save_path) as writer:
             self._generate_records_table().to_excel(writer,sheet_name='Records',index=False)
             self._generate_author_table().to_excel(writer,sheet_name='Authors')
             self._generate_journal_table().to_excel(writer,sheet_name='Journals')

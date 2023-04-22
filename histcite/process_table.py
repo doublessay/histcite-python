@@ -18,19 +18,14 @@ class ProcessTable:
 
         use_cols = ['AU','TI','SO','DT','CR','DE','C3','NR','TC','Z9','J9','PY','VL','BP','DI','UT']
         file_path = os.path.join(self.folder_path,file_name)
-        single_df = pd.read_csv(
+        df = pd.read_csv(
             file_path,sep='\t',
             header=0,
             on_bad_lines='skip',
             usecols=use_cols,
             dtype_backend="pyarrow") # type: ignore
                               
-        return single_df
-    
-    @staticmethod
-    def __extract_first_author(au_field:str):
-        """提取一作"""
-        return au_field.split(';',1)[0].replace(',','')
+        return df
     
     def concat_table(self):
         """合并多个dataframe"""
