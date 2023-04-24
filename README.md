@@ -38,9 +38,7 @@ $ histcite -f /Users/.../downloads/dataset -n 100
 > 结果保存在指定的 `folder_path` 下的 `result` 文件夹内，包含 `statistics.xlsx`, `graph.node.xlsx`, `graph.dot` 三个文件，第一个是描述统计表，第二个是引文网络图节点信息表，最后一个为引文网络图的数据文件，可以使用 [Graphviz在线编辑器](http://magjac.com/graphviz-visual-editor/) 或本地的 [Graphviz工具](https://graphviz.org/) 生成引文网络图。具体文件内容可以参考 [examples文件夹](examples)。
 
 生成的引文网络图：
-<!-- ![graph](examples/graph.svg) -->
 <img src="examples/graph.svg">
-
 对应的节点信息：
 | doc_index |      AU       |  PY  | SO                                               |  VL  |  BP  |
 | :-------: | :-----------: | :--: | :----------------------------------------------- | :--: | :--: |
@@ -66,9 +64,10 @@ process = ProcessTable(folder_path)
 process.concat_table() # 合并多个文件
 process.process_citation() # 识别引文关系
 docs_table = process.docs_table
+reference_table = process.reference_table
 
 # 基本描述统计
-cm = ComputeMetrics(docs_table, process.reference_table)
+cm = ComputeMetrics(docs_table, reference_table)
 cm.write2excel(os.path.join(folder_path,'result','statistics.xlsx'))
 
 # 生成引文网络图文件
