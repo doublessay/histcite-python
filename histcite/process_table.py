@@ -10,7 +10,6 @@ class ProcessTable:
         folder_path: 文件夹路径
         """
         self.folder_path = folder_path
-        self.check_cols = ['PY', 'J9','VL','BP']
         self.file_name_list = [i for i in os.listdir(folder_path) if i[:4]=='save']
         
     def _read_table(self,file_name:str)->pd.DataFrame:
@@ -26,6 +25,11 @@ class ProcessTable:
             dtype_backend="pyarrow") # type: ignore
                               
         return df
+   
+    @staticmethod
+    def __extract_first_author(au_cell:str):
+        """提取一作"""
+        return au_cell.split(';',1)[0].replace(',','')
     
     def concat_table(self):
         """合并多个dataframe"""
@@ -40,7 +44,7 @@ class ProcessTable:
         docs_table = docs_table.astype({'BP':'int64[pyarrow]', 'VL':'int64[pyarrow]'})
         
         # 提取一作
-        # docs_table['AU'] = docs_table['AU'].apply(lambda x:self.extract_first_author(x))
+        docs_table['AU'] = docs_table['AU'].apply(lambda x:self.__extract_first_author(x))
         
         # 按照年份进行排序
         docs_table = docs_table.sort_values(by='PY',ignore_index=True)
@@ -48,61 +52,65 @@ class ProcessTable:
         self.docs_table = docs_table
         return docs_table
     
-    @staticmethod
-    def generate_reference_table(cr_series:pd.Series):
+    def __generate_reference_table(self,cr_series:pd.Series):
         """生成参考文献表格"""
         parsed_cr_cells = [ParseCitation(doc_index,cell).parse_cr_cell() for doc_index,cell in cr_series.items()]
         reference_table = pd.concat([pd.DataFrame.from_dict(cell) for cell in parsed_cr_cells if cell],ignore_index=True)
         reference_table = reference_table.astype({'PY':'int64[pyarrow]', 'VL':'int64[pyarrow]', 'BP':'int64[pyarrow]'})
-        return reference_table
-
-    def __recognize_reference(self,row_index:int,row_year:int,row_references:pd.DataFrame):
-        """识别本地参考文献
-        row_index: 文献索引
-        row_year: 文献年份
-        row_references: 文献参考文献
-        """
-        docs_table_cols = ['doc_index']+self.check_cols
+        self.reference_table = reference_table
+    
+    def __recognize_reference(self,row_index,merge_startegy=False)->list:
+        """识别一篇文献的本地参考文献"""
         local_ref_list = []
-        child_docs_table = self.docs_table[self.docs_table['PY'] <= row_year]
-        child_citation_table = row_references
-
+        child_reference_table = self.reference_table[self.reference_table['doc_index']==row_index]
+            
         # 存在DOI
-        child_docs_table_doi = child_docs_table[child_docs_table['DI'].notna()]['DI']
-        child_citation_table_doi = child_citation_table[child_citation_table['DI'].notna()]['DI']
-        local_ref_list.extend(child_docs_table_doi[child_docs_table_doi.isin(child_citation_table_doi)].index.tolist())
+        child_reference_table_doi = child_reference_table[child_reference_table['DI'].notna()]['DI']
+        child_docs_table_doi = self.docs_table[self.docs_table['DI'].notna()]['DI']
+        local_ref_list.extend(child_docs_table_doi[child_docs_table_doi.isin(child_reference_table_doi)].index.tolist())
         
         # 不存在DOI
-        child_docs_table_left = child_docs_table[child_docs_table['DI'].isna()][docs_table_cols]
-        child_citation_table_left = child_citation_table[child_citation_table['DI'].isna()][self.check_cols]
-        common_table = pd.merge(child_docs_table_left,child_citation_table_left,on=self.check_cols)
-        if common_table.shape[0]>0:
-            common_table = common_table.drop_duplicates(subset='doc_index',ignore_index=True)
-            local_ref_list.extend(common_table['doc_index'].tolist())
-            try:
-                local_ref_list.remove(row_index)
-            except ValueError:
-                pass
-            if local_ref_list:
-                return ';'.join([str(i) for i in local_ref_list])
+        compare_cols = ['AU','PY','J9','BP']
+        child_reference_table_left = child_reference_table[child_reference_table['DI'].isna()].dropna(subset=compare_cols)
+        child_reference_py = child_reference_table_left['PY']
+        child_reference_bp = child_reference_table_left['BP']
+
+        # 年份符合，页码符合，doi为空
+        child_docs_table_left = self.docs_table[(self.docs_table['PY'].isin(child_reference_py))&(self.docs_table['BP'].isin(child_reference_bp)&self.docs_table['DI'].isna())].dropna(subset=compare_cols)
+        
+        if merge_startegy:
+            common_table = child_docs_table_left[['doc_index']+compare_cols].merge(child_reference_table_left)
+            if common_table.shape[0]>0:
+                common_table = common_table.drop_duplicates(subset='doc_index',ignore_index=True)
+                local_ref_list.extend(common_table['doc_index'].tolist())
+          
+        else:
+            for idx,row_data in child_docs_table_left.iterrows():
+                for _,child_reference in child_reference_table_left.iterrows():
+                    if all(row_data[col]==child_reference[col] for col in compare_cols):
+                        local_ref_list.append(idx)
+        
+        return local_ref_list
     
     @staticmethod
-    def __reference2citation(reference_field:pd.Series):
+    def __reference2citation(reference_field:pd.Series)->pd.Series:
         """参考文献转换到引文"""
-        citation_field = [[] for i in range(len(reference_field))]
-        for index, ref in reference_field.items():
-            if ref:
-                ref_list = ref.split(';')
-                for i in ref_list:
-                    citation_field[int(i)].append(index)
-        citation_field = [';'.join([str(j) for j in i]) if i else None for i in citation_field]
+        citation_field = pd.Series([[] for i in range(len(reference_field))])
+        for doc_index, ref_list in reference_field.items():
+            if ref_list:
+                for ref_index in ref_list:
+                    citation_field[ref_index].append(doc_index)
         return citation_field
     
-    def process_citation(self,reference_table:pd.DataFrame)->pd.DataFrame:
-        """处理引文，生成主表"""
+    def process_citation(self):
+        """处理引文"""
+        self.__generate_reference_table(self.docs_table['CR'])
+        reference_field = self.docs_table.apply(lambda row:self.__recognize_reference(row.name),axis=1)
+        citation_field = self.__reference2citation(reference_field)
 
-        self.docs_table['reference'] = self.docs_table.apply(lambda row:self.__recognize_reference(row.name,row['PY'],reference_table[reference_table['doc_index']==row.name]),axis=1) # type: ignore
-        self.docs_table['citation'] = self.__reference2citation(self.docs_table['reference'])
-        self.docs_table['LCR'] = self.docs_table['reference'].apply(lambda x: len(x.split(';')) if x else 0)
-        self.docs_table['LCS'] = self.docs_table['citation'].apply(lambda x: len(x.split(';')) if x else 0)
-        return self.docs_table
+        lcr_field = reference_field.apply(len)
+        lcs_field = citation_field.apply(len)
+        self.docs_table['reference'] = [';'.join([str(j) for j in i]) if i else None for i in reference_field]
+        self.docs_table['citation'] = [';'.join([str(j) for j in i]) if i else None for i in citation_field]
+        self.docs_table['LCR'] = lcr_field
+        self.docs_table['LCS'] = lcs_field

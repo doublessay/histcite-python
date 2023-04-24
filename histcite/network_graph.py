@@ -2,14 +2,14 @@ import pandas as pd
 
 class GraphViz:
 
-    def __init__(self,citation_table):
-        self.citation_table = citation_table
-        self.year_empty_index = set(citation_table[citation_table['PY'].isna()].index)
+    def __init__(self,docs_table):
+        self.docs_table = docs_table
+        self.year_empty_index = set(docs_table[docs_table['PY'].isna()].index)
 
     def __obtain_groups(self):
         """obtain groups of docs by year"""
 
-        year_series = self.citation_table.loc[self.node_list,'PY']
+        year_series = self.docs_table.loc[self.node_list,'PY']
         groups = year_series.groupby(year_series)
         year_list = [i[0] for i in groups]
         grouped_doc_index = [i[1].index.tolist() for i in groups]
@@ -28,7 +28,7 @@ class GraphViz:
             return {(citation,doc_index) for citation in related_doc_list}
         
     def __generate_edge_list(self):
-        min_df = self.citation_table.loc[self.doc_indices,['reference','citation']]
+        min_df = self.docs_table.loc[self.doc_indices,['reference','citation']]
         edge_set = set()
         for idx in self.doc_indices:
             doc_index = idx
@@ -66,7 +66,6 @@ class GraphViz:
         raw_edge_list = self.__generate_edge_list()
         self.__obtain_groups()
         
-        # dot_edge_list = [f'\t{edge[0]} -> {edge[1]};\n' for edge in raw_edge_list]
         dot_edge_list = [f'\t{source} -> '+'{ '+' '.join([str(i) for i in raw_edge_list[source]])+' };\n' for source in raw_edge_list]
         dot_groups = [f'\t{{rank=same; {" ".join([str(i) for i in group_index])}}};\n' for group_index in self.grouped_doc_index]
         
@@ -90,14 +89,11 @@ class GraphViz:
         dot_text += '}'
         return dot_text
     
-    @staticmethod
-    def __extract_first_author(au_cell:str):
-        """提取一作"""
-        return au_cell.split(';',1)[0].replace(',','')
-    
     def generate_graph_node_file(self)->pd.DataFrame:
         use_cols = ['doc_index','AU','PY','SO','VL','BP','LCS','TC']
-        graph_node_table = self.citation_table.loc[self.node_list,use_cols]
-        graph_node_table['AU'] = graph_node_table['AU'].apply(self.__extract_first_author)
+        graph_node_table = self.docs_table.loc[self.node_list,use_cols]
         graph_node_table = graph_node_table.rename(columns={'TC':'GCS'})
         return graph_node_table
+    
+    def _export_graph_node_file(self,file_path:str):
+        self.generate_graph_node_file().to_excel(file_path,index=False)

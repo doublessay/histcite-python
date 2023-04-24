@@ -4,13 +4,13 @@ import pandas as pd
 class ComputeMetrics:
     """生成统计结果"""
 
-    def __init__(self,citation_table,reference_table):
-        self.citation_table = citation_table
+    def __init__(self,docs_table,reference_table):
+        self.docs_table = docs_table
         self.reference_table = reference_table
 
     def __generate_table(self,use_cols:list,col:str,split_char=None)->pd.DataFrame:
         
-        df = self.citation_table[use_cols]
+        df = self.docs_table[use_cols]
         # 如果字段包含多个值，则进行拆分
         if split_char:
             try:
@@ -44,7 +44,7 @@ class ComputeMetrics:
     def _generate_records_table(self):
         """生成文献简表"""
         use_cols = ['AU','TI','SO','LCS','TC','LCR','NR']
-        records_table = self.citation_table[use_cols]
+        records_table = self.docs_table[use_cols]
         records_table = records_table.rename(columns={'TC':'GCS','NR':'GCR'})
         return records_table
     
@@ -67,7 +67,7 @@ class ComputeMetrics:
         reference_table = self.reference_table.groupby(use_cols,as_index=False).size()
         reference_table = reference_table.sort_values(by='size',ascending=False)
         reference_table = reference_table.rename(columns={'size':'Recs'})
-        common_table = reference_table.reset_index().merge(self.citation_table[check_cols],on=check_cols)
+        common_table = reference_table.reset_index().merge(self.docs_table[check_cols],on=check_cols)
         reference_table['local'] = 0
         reference_table.loc[common_table['index'],'local'] = 1
         return reference_table

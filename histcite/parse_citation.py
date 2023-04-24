@@ -46,7 +46,7 @@ class ParseCitation:
         finally:
             # AU strip
             if isinstance(AU,str):
-                cr_data['AU'] = AU.strip()
+                cr_data['AU'] = AU.strip(', ')
             else:
                 return None
         
@@ -76,8 +76,3 @@ class ParseCitation:
         
         result['doc_index'] = self.doc_index
         return result
-    
-    def export_citation_table(self):
-        parsed_result = self.parse_cr_cell()
-        if parsed_result:
-            return pd.DataFrame.from_dict(parsed_result)
