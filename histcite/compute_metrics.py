@@ -13,12 +13,10 @@ class ComputeMetrics:
         df = self.docs_table[use_cols]
         # 如果字段包含多个值，则进行拆分
         if split_char:
-            try:
-                df = df.dropna(subset=[col])
-                df[col] = df[col].str.split(split_char)
-            except NotImplementedError:
-                df = df.astype({col:'str'})
-                df[col] = df[col].str.split(split_char)
+            
+            df = df.dropna(subset=[col])
+            df = df.astype({col:'str'})
+            df[col] = df[col].str.split(split_char)
             df = df.explode(col)
             df = df.reset_index(drop=True)
         

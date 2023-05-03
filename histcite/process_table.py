@@ -22,8 +22,7 @@ class ProcessTable:
             header=0,
             on_bad_lines='skip',
             usecols=use_cols,
-            dtype_backend="pyarrow") # type: ignore
-                              
+            dtype_backend="pyarrow") # type: ignore                    
         return df
    
     @staticmethod
@@ -33,8 +32,13 @@ class ProcessTable:
     
     def concat_table(self):
         """合并多个dataframe"""
-
-        docs_table = pd.concat([self._read_table(file_name) for file_name in self.file_name_list],ignore_index=True,copy=False)
+        if len(self.file_name_list)>1:
+            docs_table = pd.concat([self._read_table(file_name) for file_name in self.file_name_list],ignore_index=True,copy=False)
+        elif len(self.file_name_list)==1:
+            docs_table = self._read_table(self.file_name_list[0])
+        else:
+            raise ValueError('No valid file in the folder')
+        
         # 根据入藏号删除重复数据，一般不会有重复数据
         docs_table.drop_duplicates(subset='UT',ignore_index=True,inplace=True)
 
@@ -44,7 +48,8 @@ class ProcessTable:
         docs_table = docs_table.astype({'BP':'int64[pyarrow]', 'VL':'int64[pyarrow]'})
         
         # 提取一作
-        docs_table['AU'] = docs_table['AU'].apply(lambda x:self.__extract_first_author(x))
+        first_au = docs_table['AU'].apply(lambda x:self.__extract_first_author(x))
+        docs_table.insert(1,'first_AU',first_au)
         
         # 按照年份进行排序
         docs_table = docs_table.sort_values(by='PY',ignore_index=True)
@@ -57,6 +62,7 @@ class ProcessTable:
         parsed_cr_cells = [ParseCitation(doc_index,cell).parse_cr_cell() for doc_index,cell in cr_series.items()]
         reference_table = pd.concat([pd.DataFrame.from_dict(cell) for cell in parsed_cr_cells if cell],ignore_index=True)
         reference_table = reference_table.astype({'PY':'int64[pyarrow]', 'VL':'int64[pyarrow]', 'BP':'int64[pyarrow]'})
+        reference_table.rename(columns={'AU':'first_AU'},inplace=True)
         self.reference_table = reference_table
     
     def __recognize_reference(self,row_index,merge_startegy=False)->list:
@@ -70,7 +76,7 @@ class ProcessTable:
         local_ref_list.extend(child_docs_table_doi[child_docs_table_doi.isin(child_reference_table_doi)].index.tolist())
         
         # 不存在DOI
-        compare_cols = ['AU','PY','J9','BP']
+        compare_cols = ['first_AU','PY','J9','BP']
         child_reference_table_left = child_reference_table[child_reference_table['DI'].isna()].dropna(subset=compare_cols)
         child_reference_py = child_reference_table_left['PY']
         child_reference_bp = child_reference_table_left['BP']

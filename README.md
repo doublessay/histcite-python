@@ -16,20 +16,20 @@
 - Web of science题录数据 [字段说明](https://images.webofknowledge.com/WOKRS5132R4.2/help/zh_CN/WOS/hs_wos_fieldtags.html)；
 
 ## 快速开始
-> 适用于本工具的数据集，来源Web of Science核心合集，<b> Tab delimited file/制表符分隔文件</b> 格式，导出内容选择 <b>Full Record and Cited References/全记录与引用的参考文献</b> 或者是 <b>Custome selection/自定义选择项</b>，全选字段，下载之后放在某个文件夹内；    
-
+> 适用于本工具的数据集，来源Web of Science核心合集，<b> Tab delimited file/制表符分隔文件</b> 格式，导出内容选择 <b>Full Record and Cited References/全记录与引用的参考文献</b> 或者是 <b>Custome selection/自定义选择项</b>，全选字段，下载之后不要修改文件名，放在某个文件夹内；  
 ```console
-# 需要 Python 3.8 或以上版本
+# 需要 Python3.8 或以上版本
 pip install histcite-python
 ```
 
 ## 使用方法
 1、使用命令行工具，可用参数如下：
-| 简写参数 | 参数 | 说明 |
-| :-: | :-: | --- |
+|  | 参数 | 说明 |
+| :---: | :---: | --- |
 | -f | --folder_path | 下载的题录数据存放的文件夹路径，必须指定 |
 | -n | --node_num | 引文网络图中包含的节点数量，默认为 `50`，即 `LCS` 最高的 `50` 篇文献 |
 | -g | --graph | 是否仅生成图文件，指定该参数表示 `True`, 无需传值 |
+
 ```console
 $ 假设下载的wos文件夹路径为 /Users/.../downloads/dataset，引文网络图包含的节点数设置为 100
 $ histcite -f /Users/.../downloads/dataset -n 100
@@ -41,8 +41,9 @@ $ histcite -f /Users/.../downloads/dataset -n 100
 
 <img src="examples/graph.svg">
 
-对应的节点信息：
-| doc_index |      AU       |  PY  | SO                                               |  VL  |  BP  |
+对应的文献节点信息：
+
+|  |      AU       |  PY  | SO                                               |  VL  |  BP  |
 | :-------: | :-----------: | :--: | :----------------------------------------------- | :--: | :--: |
 |    31     |    Iyer R     | 1997 | IEEE SIGNAL PROCESSING LETTERS                   |  4   | 221  |
 |    58     |    Iyer RM    | 1999 | IEEE TRANSACTIONS ON SPEECH AND AUDIO PROCESSING |  7   |  30  |
@@ -56,7 +57,7 @@ $ histcite -f /Users/.../downloads/dataset -n 100
 ```python
 import os
 import pandas as pd
-from histcite.parse_table import ParseTable
+from histcite.process_table import ParseTable
 from histcite.compute_metrics import ComputeMetrics
 from histcite.network_graph import Graphviz
 
