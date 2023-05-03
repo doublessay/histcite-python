@@ -99,4 +99,4 @@ graph_node_file.to_excel(os.path.join(folder_path,'result','graph.node.xlsx'),in
 
 ## TODO
 - [ ] 支持 `scopus` 题录数据
-- [ ] 构建GUI页面
+- [ ] 构建 `GUI` 页面
