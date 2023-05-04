@@ -37,7 +37,7 @@ class ProcessTable:
         elif len(self.file_name_list)==1:
             docs_table = self._read_table(self.file_name_list[0])
         else:
-            raise ValueError('No valid file in the folder')
+            raise FileNotFoundError('No valid file in the folder')
         
         # 根据入藏号删除重复数据，一般不会有重复数据
         docs_table.drop_duplicates(subset='UT',ignore_index=True,inplace=True)
