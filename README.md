@@ -86,7 +86,7 @@ with open(os.path.join(folder_path,'result','graph.dot'), 'w') as f:
 graph_node_file = graph.generate_graph_node_file()
 graph_node_file.to_excel(os.path.join(folder_path,'result','graph.node.xlsx'),index=False)
 ```
-> 注：`generate_dot_file` 函数的 `allow_external_node` 参数表示引文网络节点中是否允许出现 `doc_indices` 之外的节点文献，`doc_indices` 一般为 `LCS` 比较高的文献，这些文献同样会参考低 `LCS` 的文献，或被低 `LCS` 的文献引用，因此如果将 `allow_external_node` 设置为 `True`, 图文件中将会出现这些低LCS的文献节点，默认为 `False`。
+> 注：`generate_dot_file` 函数的 `allow_external_node` 参数表示引文网络节点中是否允许出现 `doc_indices` 之外的节点文献，`doc_indices` 一般为 `LCS` 比较高的文献，这些文献同样会参考低 `LCS` 的文献，或被低 `LCS` 的文献引用，因此如果将 `allow_external_node` 设置为 `True`, 图文件中将会出现这些低 `LCS` 的文献节点，默认为 `False`。
 
 ## 工具对比：
 | 对比项 | [histcite-python](https://github.com/doublessay/histcite-python) | [histcite pro](https://zhuanlan.zhihu.com/p/20902898) |
@@ -99,7 +99,7 @@ graph_node_file.to_excel(os.path.join(folder_path,'result','graph.node.xlsx'),in
 
 ## Q&A
 1、如何识别引文关系？  
-每条文献元数据都存在 `CR` 字段，表示该文献的参考文献集合。发表时间等于或早于当前文献的其他文献为候选文献，如果这些候选文献存在 `DOI` 信息，则判断 `DOI` 是否在参考文献集合的 `DOI` 列表中；如果不存在 `DOI` 信息，则判断 `第一作者`、`发表年份`、`期刊名称`、`期号` 四个字段信息是否与参考文献集合的某条记录一致，一致则判断为引用关系。  
+每条文献元数据都包含 `CR` 字段，表示该文献的参考文献集合。发表时间等于或早于当前文献的其他文献为候选文献，如果这些候选文献存在 `DOI` 信息，则判断 `DOI` 是否在参考文献集合的 `DOI` 列表中；如果不存在 `DOI` 信息，则判断 `第一作者`、`发表年份`、`期刊名称`、`期号` 四个字段信息是否与参考文献集合的某条记录一致，一致则判断为引用关系。  
 
 ## TODO
 - [ ] 支持 `scopus` 题录数据

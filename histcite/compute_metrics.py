@@ -8,7 +8,7 @@ class ComputeMetrics:
         self.docs_table = docs_table
         self.reference_table = reference_table
 
-    def __generate_table(self,use_cols:list,col:str,split_char=None)->pd.DataFrame:
+    def __generate_table(self,use_cols:list,col:str,split_char=None,str_lower=False)->pd.DataFrame:
         
         df = self.docs_table[use_cols]
         # 如果字段包含多个值，则进行拆分
@@ -16,7 +16,13 @@ class ComputeMetrics:
             
             df = df.dropna(subset=[col])
             df = df.astype({col:'str'})
-            df[col] = df[col].str.split(split_char)
+            
+            if str_lower:
+                col_str_lower = df[col].str.lower()
+                df[col] = col_str_lower.str.split(split_char)
+            else:
+                df[col] = df[col].str.split(split_char)
+                
             df = df.explode(col)
             df = df.reset_index(drop=True)
         
@@ -33,7 +39,7 @@ class ComputeMetrics:
     
     def _generate_keywords_table(self):
         use_cols = ['DE','LCS','TC']
-        return self.__generate_table(use_cols,'DE','; ')
+        return self.__generate_table(use_cols,'DE','; ',True)
     
     def _generate_institution_table(self):
         use_cols = ['C3','LCS','TC']
