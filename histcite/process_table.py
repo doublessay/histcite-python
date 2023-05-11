@@ -17,13 +17,16 @@ class ProcessTable:
 
         use_cols = ['AU','TI','SO','DT','CR','DE','C3','NR','TC','Z9','J9','PY','VL','BP','DI','UT']
         file_path = os.path.join(self.folder_path,file_name)
-        df = pd.read_csv(
-            file_path,sep='\t',
-            header=0,
-            on_bad_lines='skip',
-            usecols=use_cols,
-            dtype_backend="pyarrow") # type: ignore                    
-        return df
+        try:
+            df = pd.read_csv(
+                file_path,sep='\t',
+                header=0,
+                on_bad_lines='skip',
+                usecols=use_cols,
+                dtype_backend="pyarrow") # type: ignore     
+            return df
+        except ValueError:
+            raise ValueError(f'File {file_name} is not a tab delimited file')
    
     @staticmethod
     def __extract_first_author(au_cell:str):

@@ -1,6 +1,6 @@
 # HistCite工具的Python实现
 
-由于原引文分析工具 [HistCite](https://support.clarivate.com/ScientificandAcademicResearch/s/article/HistCite-No-longer-in-active-development-or-officially-supported) 已停止维护，目前国内普遍使用的为中科大某位同学在原程序基础上进行修复的版本 [HistCite Pro](https://zhuanlan.zhihu.com/p/20902898)，仅能在 `Windows` 平台上运行，存在诸多限制。借助 [pandas 2.0](https://pandas.pydata.org/docs/dev/whatsnew/v2.0.0.html) 和可视化工具 [Graphviz](https://graphviz.org)，本工具复刻了原 `HistCite` 的大部分功能，并且可以跨平台使用。
+由于原引文分析工具 [HistCite](https://support.clarivate.com/ScientificandAcademicResearch/s/article/HistCite-No-longer-in-active-development-or-officially-supported) 已停止维护，目前国内普遍使用的为国科大某位同学在原程序基础上进行修复的版本 [HistCite Pro](https://zhuanlan.zhihu.com/p/20902898)，仅能在 `Windows` 平台上运行，存在诸多限制。借助 [pandas 2.0](https://pandas.pydata.org/docs/dev/whatsnew/v2.0.0.html) 和可视化工具 [Graphviz](https://graphviz.org)，本工具复刻了原 `HistCite` 的大部分功能，并且可以跨平台使用。
 
 核心功能：
 - 生成引文网络图；
@@ -102,5 +102,6 @@ graph_node_file.to_excel(os.path.join(folder_path,'result','graph.node.xlsx'),in
 每条文献元数据都包含 `CR` 字段，表示该文献的参考文献集合。发表时间等于或早于当前文献的其他文献为候选文献，如果这些候选文献存在 `DOI` 信息，则判断 `DOI` 是否在参考文献集合的 `DOI` 列表中；如果不存在 `DOI` 信息，则判断 `第一作者`、`发表年份`、`期刊名称`、`期号` 四个字段信息是否与参考文献集合的某条记录一致，一致则判断为引用关系。  
 
 ## TODO
-- [ ] 支持 `scopus` 题录数据
-- [ ] 构建 `GUI` 页面
+- [ ] 支持 `CSSCI` 题录数据
+- [ ] 支持 `Scopus` 题录数据
+- [ ] 支持 `PubMed` 题录数据
