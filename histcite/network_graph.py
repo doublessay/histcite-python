@@ -9,7 +9,6 @@ class GraphViz:
 
     def __obtain_groups(self):
         """obtain groups of docs by year"""
-
         year_series = self.docs_table.loc[self.node_list,'PY']
         groups = year_series.groupby(year_series)
         year_list = [i[0] for i in groups]
@@ -20,7 +19,6 @@ class GraphViz:
         self.grouped_doc_index = grouped_doc_index
     
     def __generate_edge(self,doc_index:int,doc_relation:str,relation_type:str):
-
         # filter docs with empty year
         related_doc_list = [int(i) for i in doc_relation.split(';') if int(i) not in self.year_empty_index]
         if relation_type=='reference':
@@ -58,7 +56,7 @@ class GraphViz:
         
     def generate_dot_file(self,doc_indices,allow_external_node=False):
         """生成dot文件
-        doc_indices: 文献索引列表;
+        doc_indices: 文献索引列表\n
         allow_external_node: 是否允许出现doc_indices之外的节点，默认False
         """
         self.doc_indices = [i for i in doc_indices if i not in self.year_empty_index]

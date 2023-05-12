@@ -34,8 +34,7 @@ class ProcessFile:
             raise ValueError('Invalid source type')
         
     def _read_wos_file(self,file_name:str)->pd.DataFrame:
-        """读取表单，返回dataframe"""
-
+        """读取wos表单"""
         use_cols = ['AU','TI','SO','DT','CR','DE','C3','NR','TC','Z9','J9','PY','VL','BP','DI','UT']
         file_path = os.path.join(self.folder_path,file_name)
         try:
@@ -60,6 +59,7 @@ class ProcessFile:
             return df
         
     def _read_cssci_file(self,file_name:str)->pd.DataFrame:
+        """读取cssci文本文件"""
         file_path = os.path.join(self.folder_path,file_name)
         with open(file_path,'r') as f:
             text = f.read()
