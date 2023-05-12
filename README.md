@@ -3,7 +3,7 @@
 由于原引文分析工具 [HistCite](https://support.clarivate.com/ScientificandAcademicResearch/s/article/HistCite-No-longer-in-active-development-or-officially-supported) 已停止维护，目前国内普遍使用的为国科大某位同学在原程序基础上进行修复的版本 [HistCite Pro](https://zhuanlan.zhihu.com/p/20902898)，仅能在 `Windows` 平台上运行，存在诸多限制。借助 [pandas 2.0](https://pandas.pydata.org/docs/dev/whatsnew/v2.0.0.html) 和可视化工具 [Graphviz](https://graphviz.org)，本工具复刻了原 `HistCite` 的大部分功能，同时拓展了对其他数据源的支持，可以跨平台使用。
 
 最近更新：
-- `v0.2.0` 增加了对 `CSSCI` 数据库题录数据的支持，对调用方式进行调整；
+- `v0.2.0` 增加了对 `CSSCI` 数据库题录数据的支持，并对调用方式进行调整；
 
 核心功能：
 - 生成引文网络图；
@@ -28,8 +28,8 @@ pip install histcite-python
 ## 数据准备
 | 数据来源 | 下载说明 |
 | :---: | --- |
-| `Web of Science` | **Web of Science核心合集**，格式选择 **Tab delimited file/制表符分隔文件**，导出内容选择 **Full Record and Cited References/全记录与引用的参考文献** 或者是 **Custome selection/自定义选择项，全选字段** |
-| `CSSCI` | 从 **CSSCI数据库** 正常导出即可 |
+| `Web of Science` | 核心合集，格式选择 Tab delimited file/制表符分隔文件，导出内容选择 Full Record and Cited References/全记录与引用的参考文献 或者是 Custome selection/自定义选择项，全选字段 |
+| `CSSCI` | 从CSSCI数据库正常导出即可 |
 > 注：文件下载之后不要改名(会根据文件名识别有效的题录数据文件)，下载完成后放在一个单独的文件夹下。
 
 ## 使用方法
@@ -45,7 +45,7 @@ pip install histcite-python
 $ 假设文件夹路径为/Users/.../downloads/dataset，来源为web of science, 引文网络图节点数设置为100
 $ histcite -f /Users/.../downloads/dataset -t wos -n 100
 ```
-> 结果保存在指定的 `folder_path` 下的 `result` 文件夹内，包含 `statistics.xlsx`, `graph.node.xlsx`, `graph.dot` 三个文件，第一个是描述统计表，第二个是引文网络图节点信息表，最后一个为引文网络图的数据文件，可以使用 [Graphviz在线编辑器](http://magjac.com/graphviz-visual-editor/) 或本地的 [Graphviz工具](https://graphviz.org/) 生成引文网络图。具体文件内容可以参考 [examples文件夹](examples)。 
+> 结果保存在指定的 `folder_path` 下的 `result` 文件夹内，包含 statistics.xlsx, graph.node.xlsx, graph.dot 三个文件，第一个是描述统计表，第二个是引文网络图节点信息表，最后一个为引文网络图的数据文件，可以使用 [Graphviz在线编辑器](http://magjac.com/graphviz-visual-editor/) 或本地的 [Graphviz工具](https://graphviz.org/) 生成引文网络图。具体内容可以参考 [examples文件夹](examples)。 
 
 生成的引文网络图：
 
@@ -62,7 +62,7 @@ $ histcite -f /Users/.../downloads/dataset -t wos -n 100
 |    82     | Bellegarda JR | 2000 | PROCEEDINGS OF THE IEEE                          |  88  | 1279 |
 |    ...    |               |      |                                                  |      |      |
 
-2、函数调用，相比命令行工具，函数调用更加灵活，可以自定义更多参数，获取过程数据，参考 [demo.ipynb](demo.ipynb)
+2、函数调用，相比命令行工具，函数调用更加灵活，可以自定义更多参数，参考 [demo.ipynb](demo.ipynb)
 
 ```python
 import os
@@ -110,12 +110,12 @@ graph_node_file.to_excel(os.path.join(folder_path,'result','graph.node.xlsx'),in
 
 ## Q&A
 1、如何识别引文关系？  
-**Web of Science:** 每条文献元数据都包含 `CR` 字段，表示该文献的参考文献集合。发表时间等于或早于当前文献的其他文献为候选文献，如果这些候选文献存在 `DOI` 信息，则判断 `DOI` 是否在参考文献集合的 `DOI` 列表中；如果不存在 `DOI` ，则判断 `一作`、`发表年份`、`期刊名称`、`期次` 四个字段信息是否与参考文献集合的某条记录一致，一致则判断为引用。  
-**CSSCI:** 通过 `一作 `和 `题名` 两个字段进行判断。  
+`Web of Science:` 每条文献元数据都包含 `CR` 字段，表示该文献的参考文献集合。发表时间等于或早于当前文献的其他文献为候选文献，如果这些候选文献存在 `DOI` 信息，则判断 `DOI` 是否在参考文献集合的 `DOI` 列表中；如果不存在 `DOI` ，则判断 `一作`、`发表年份`、`期刊名称`、`期次` 四个字段信息是否与参考文献集合的某条记录一致，一致则判断为引用。  
+`CSSCI:` 通过 `一作 `和 `题名` 两个字段进行判断。  
 
 2、如何去重？  
-**Web of Science:** 按照 `UT` 入藏号字段进行去重。  
-**CSSCI:** 按照 `一作` 和 `题名` 两个字段进行去重。
+`Web of Science:` 按照 `UT` 入藏号字段进行去重。  
+`CSSCI:` 按照 `一作` 和 `题名` 两个字段进行去重。
 
 ## TODO
 - [x] 支持 `CSSCI` 题录数据
