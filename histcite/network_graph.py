@@ -2,8 +2,9 @@ import pandas as pd
 
 class GraphViz:
 
-    def __init__(self,docs_table):
+    def __init__(self,docs_table:pd.DataFrame,source_type:str):
         self.docs_table = docs_table
+        self.source_type = source_type
         self.year_empty_index = set(docs_table[docs_table['PY'].isna()].index)
 
     def __obtain_groups(self):
@@ -90,9 +91,18 @@ class GraphViz:
         return dot_text
     
     def generate_graph_node_file(self)->pd.DataFrame:
-        use_cols = ['doc_index','AU','PY','SO','VL','BP','LCS','TC']
+        if self.source_type == 'wos':
+            use_cols = ['doc_index','AU','PY','SO','VL','BP','LCS','TC']
+        elif self.source_type == 'cssci':
+            use_cols = ['doc_index','AU','PY','SO','LCS']
+        else:
+            raise ValueError('invalid source type')
         graph_node_table = self.docs_table.loc[self.node_list,use_cols]
-        graph_node_table = graph_node_table.rename(columns={'TC':'GCS'})
+        
+        try:
+            graph_node_table = graph_node_table.rename(columns={'TC':'GCS'})
+        except KeyError:
+            pass
         return graph_node_table
     
     def _export_graph_node_file(self,file_path:str):

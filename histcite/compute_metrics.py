@@ -4,9 +4,10 @@ import pandas as pd
 class ComputeMetrics:
     """生成统计结果"""
 
-    def __init__(self,docs_table,reference_table):
+    def __init__(self,docs_table,reference_table,source_type:str):
         self.docs_table = docs_table
         self.reference_table = reference_table
+        self.source_type = source_type
 
     def __generate_table(self,use_cols:list,col:str,split_char=None,str_lower=False)->pd.DataFrame:
         
@@ -26,34 +27,65 @@ class ComputeMetrics:
             df = df.explode(col)
             df = df.reset_index(drop=True)
         
-        if 'LCS' in use_cols:
+        if 'LCS' in use_cols and 'TC' in use_cols:
             grouped_df = df.groupby(col).agg({col: 'count', 'LCS': 'sum', 'TC': 'sum'})
             grouped_df = grouped_df.rename(columns={col: 'Recs', 'LCS': 'TLCS', 'TC': 'TGCS'})
-        else:
+        elif 'LCS' in use_cols and 'TC' not in use_cols:
+            grouped_df = df.groupby(col).agg({col: 'count', 'LCS': 'sum'})
+            grouped_df = grouped_df.rename(columns={col: 'Recs', 'LCS': 'TLCS'})
+        elif 'LCS' not in use_cols and 'TC' not in use_cols:
             grouped_df = df.groupby(col).agg({col: 'count'}).rename(columns={col: 'Recs'})
+        else:
+            raise ValueError('Invalid columns list')
         return grouped_df.sort_values('Recs', ascending=False)
     
     def _generate_author_table(self):
-        use_cols = ['AU','LCS','TC']
+        if self.source_type == 'wos':
+            use_cols = ['AU','LCS','TC']
+        elif self.source_type == 'cssci':
+            use_cols = ['AU','LCS']
+        else:
+            raise ValueError('Invalid source type')
         return self.__generate_table(use_cols,'AU','; ')
     
     def _generate_keywords_table(self):
-        use_cols = ['DE','LCS','TC']
+        if self.source_type == 'wos':
+            use_cols = ['DE','LCS','TC']
+        elif self.source_type == 'cssci':
+            use_cols = ['DE','LCS']
+        else:
+            raise ValueError('Invalid source type')
         return self.__generate_table(use_cols,'DE','; ',True)
     
     def _generate_institution_table(self):
-        use_cols = ['C3','LCS','TC']
+        if self.source_type == 'wos':
+            use_cols = ['C3','LCS','TC']
+        elif self.source_type == 'cssci':
+            use_cols = ['C3','LCS']
+        else:
+            raise ValueError('Invalid source type')
         return self.__generate_table(use_cols,'C3','; ')
     
     def _generate_records_table(self):
         """生成文献简表"""
-        use_cols = ['AU','TI','SO','LCS','TC','LCR','NR']
+        if self.source_type == 'wos':
+            use_cols = ['AU','TI','SO','LCS','TC','LCR','NR']
+        elif self.source_type == 'cssci':
+            use_cols = ['AU','TI','SO','LCS','LCR']
+        else:
+            raise ValueError('Invalid source type')
         records_table = self.docs_table[use_cols]
-        records_table = records_table.rename(columns={'TC':'GCS','NR':'GCR'})
+        if self.source_type == 'wos':
+            records_table = records_table.rename(columns={'TC':'GCS','NR':'GCR'})
         return records_table
     
     def _generate_journal_table(self):
-        use_cols = ['SO','LCS','TC']
+        if self.source_type == 'wos':
+            use_cols = ['SO','LCS','TC']
+        elif self.source_type == 'cssci':
+            use_cols = ['SO','LCS']
+        else:
+            raise ValueError('Invalid source type')
         return self.__generate_table(use_cols,'SO')
 
     def _generate_year_table(self):
@@ -66,7 +98,12 @@ class ComputeMetrics:
    
     def _generate_reference_table(self):
         """生成参考文献表，按照引用次数降序排列，同时标记是否为本地文献"""
-        check_cols = ['PY','J9','VL','BP']
+        if self.source_type == 'wos':
+            check_cols = ['PY','J9','VL','BP']
+        elif self.source_type == 'cssci':
+            check_cols = ['first_AU','TI']
+        else:
+            raise ValueError('Invalid source type')
         use_cols = self.reference_table.columns.tolist()[:-1]
         reference_table = self.reference_table.groupby(use_cols,as_index=False).size()
         reference_table = reference_table.sort_values(by='size',ascending=False)
@@ -76,7 +113,7 @@ class ComputeMetrics:
         reference_table.loc[common_table['index'],'local'] = 1
         return reference_table
     
-    def write2excel(self,save_path):
+    def write2excel(self,save_path:str):
         """将统计结果写入excel"""
         save_folder_path = os.path.dirname(save_path)
         if not os.path.exists(save_folder_path):
@@ -88,5 +125,6 @@ class ComputeMetrics:
             self._generate_reference_table().to_excel(writer,sheet_name='Cited References',index=False)
             self._generate_keywords_table().to_excel(writer,sheet_name='Keywords')
             self._generate_year_table().to_excel(writer,sheet_name='Years')
-            self._generate_document_type_table().to_excel(writer,sheet_name='Document Type')
             self._generate_institution_table().to_excel(writer,sheet_name='Institutions')
+            if self.source_type == 'wos':
+                self._generate_document_type_table().to_excel(writer,sheet_name='Document Type')
