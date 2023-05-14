@@ -10,7 +10,7 @@ class ParseReference:
         if source_type=='wos':
             sep = '; '
         elif source_type=='cssci':
-            sep = '\n'
+            sep = '; '
         else:
             raise ValueError('Invalid source type')
         

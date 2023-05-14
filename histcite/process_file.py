@@ -83,6 +83,7 @@ class ProcessFile:
         df['DE'] = df['DE'].str.replace('/','; ')
         df['PY'] = df['PY&VL&BP&EP'].str.extract(r'^(\d{4}),',expand=False)
         df['C3'] = df['C3'].apply(ProcessCssciFile.process_orgs)
+        df['CR'] = df['CR'].str.replace('\n','; ')
         return df
     
     def concat_table(self):
