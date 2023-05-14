@@ -23,7 +23,7 @@ class ParseReference:
         self.source_type = source_type
 
     @staticmethod
-    def __parse_wos_cr(cr):
+    def _parse_wos_cr(cr):
         """Parse a single citation record"""
         AU,PY,J9,VL,BP,DI = None,None,None,None,None,None
         cr_data = {}
@@ -69,12 +69,14 @@ class ParseReference:
             return cr_data
     
     @staticmethod
-    def __parse_cssci_cr(cr):
+    def _parse_cssci_cr(cr):
 
+        pattern = re.compile(r'(?<!\d)\.(?!\d)|(?<=\d)\.(?!\d)|(?<!\d)\.(?=\d)|(?<=\d{4})\.(?=\d{4})')
         # 中文参考文献
         if re.search(r'[\u4e00-\u9fa5]',cr):
             try:
-                _,AU,TI,_ = cr.split('.',3)
+                # _,AU,TI,_ = cr.split('.',3)
+                _,AU,TI,_ = pattern.split(cr,3)
                 if ',' not in AU:
                     return {'first_AU':AU,'TI':TI}
             except ValueError:
@@ -82,29 +84,35 @@ class ParseReference:
     
         # 英文参考文献
         else:
-            if AU := re.search(r'^\d+\.(.*?)\.[A-Z]+[a-z]+',cr):
-                AU = AU.group(1)
+            if index_AU := re.search(r'^(\d+\.(.*?))\.[A-Za-z"“\d]{1}[a-zA-Z\s\d]+',cr):
+                AU = index_AU.group(2)
                 if AU !='':
-                    other = cr.replace(f'{AU}.','')
+                    # other = cr.replace(f'{AU}.','')
+                    other = cr.replace(index_AU.group(1),'')
                     try:
-                        _,TI,_ = other.split('.',2)
+                        # _,TI,_ = other.split('.',2)
+                        _,TI,_ = pattern.split(other,2)
                         return {'first_AU':AU,'TI':TI}
                     except ValueError:
                         return None
                         
                 else:
-                    _,_,TI,_ = cr.split('.',3)
-                    return {'first_AU':AU,'TI':TI}
-            
+                    try:
+                        _,_,TI,_ = pattern.split(cr,3)
+                    except ValueError:
+                        _,_,TI,_ = cr.split('.',3)
+                    finally:
+                        return {'first_AU':AU,'TI':TI} # type:ignore
+                     
     def parse_cr_cell(self):
         if self.cr_count == 0:
             return None
         
         if self.source_type == "wos":
-            parsed_cr_list = [self.__parse_wos_cr(i) for i in self.cr_list]
+            parsed_cr_list = [self._parse_wos_cr(i) for i in self.cr_list]
             keys = ['first_AU','PY','J9','VL','BP','DI']
         elif self.source_type == "cssci":
-            parsed_cr_list = [self.__parse_cssci_cr(i) for i in self.cr_list]
+            parsed_cr_list = [self._parse_cssci_cr(i) for i in self.cr_list]
             keys = ['first_AU','TI']
         else:
             raise ValueError()
