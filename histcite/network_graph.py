@@ -89,7 +89,6 @@ class GraphViz:
         return dot_text
     
     def generate_graph_node_file(self)->pd.DataFrame:
-
         # source_type会对节点信息产生影响
         if self.source_type == 'wos':
             use_cols = ['doc_index','AU','PY','SO','VL','BP','LCS','TC']

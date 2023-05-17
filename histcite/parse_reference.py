@@ -21,7 +21,6 @@ class ParseReference:
     def _parse_wos_cr(cr:str):
         AU,PY,J9,VL,BP,DI = None,None,None,None,None,None
         cr_data = {}
-
         try:
             AU,PY,J9,other = re.split(r', (?![^\[\]]*\])',cr,3)
         except ValueError:
@@ -64,7 +63,6 @@ class ParseReference:
     
     @staticmethod
     def _parse_cssci_cr(cr:str):
-        
         au_pattern = re.compile(r'(?<!\d)\.(?!\d)|(?<=\d)\.(?!\d)|(?<!\d)\.(?=\d)|(?<=\d{4})\.(?=\d{4})')
         # 中文参考文献
         if re.search(r'[\u4e00-\u9fa5]',cr):
@@ -86,7 +84,6 @@ class ParseReference:
                         return {'first_AU':AU,'TI':TI}
                     except ValueError:
                         return None
-                        
                 else:
                     try:
                         _,_,TI,_ = au_pattern.split(cr,3)
@@ -96,7 +93,6 @@ class ParseReference:
     
     @staticmethod
     def _parse_scopus_cr(cr:str,TI_pattern):
-        
         if TI := TI_pattern.search(cr):
             TI = TI[0]
             if re.match('^[a-z]',TI):

@@ -29,9 +29,9 @@ pip install histcite-python
 ## 数据准备
 | 数据来源 | 下载说明 |
 | :---: | --- |
-| `Web of Science` | `核心合集`，格式选择 `Tab delimited file/制表符分隔文件`，导出内容选择 `Full Record and Cited References/全记录与引用的参考文献` 或者是 `Custome selection/自定义选择项`，全选字段 |
-| `CSSCI` | 从 `CSSCI数据库` 正常导出即可 |
-| `Scopus` | 格式选择 `CSV` 文件，导出字段需要额外勾选 `Author keywords` 和 `Include references`，或者直接全选字段。不勾选 `Truncate to optimize for Excel`|
+| `Web of Science` | `核心合集`，格式选择 `Tab delimited file/制表符分隔文件`，导出内容选择 `Full Record and Cited References/全记录与引用的参考文献` 或者是 `Custome selection/自定义选择项`，全选字段； |
+| `CSSCI` | 从 `CSSCI数据库` 正常导出即可； |
+| `Scopus` | 格式选择 `CSV` 文件，导出字段需要额外勾选 `Author keywords` 和 `Include references`，或者直接全选字段。取消勾选 `Truncate to optimize for Excel`； |
 > 注：文件下载之后不要改名(会根据文件名识别有效的题录数据文件)，下载完成后放在一个单独的文件夹内。
 
 ## 使用方法
@@ -113,7 +113,7 @@ graph_node_file.to_excel(os.path.join(folder_path,'result','graph.node.xlsx'),in
 ## Q&A
 |  | Web of Science | CSSCI | Scopus|
 | --- | --- | --- | --- |
-| 如何识别引文关系 | 如果存在 `DOI`，则优先使用 `DOI` 进行匹配；</br>否则通过 `一作`、`发表年份`、`文献来源`、`开始页` 进行判断  | 通过 `一作 `和 `题名` 进行判断 | 通过 `一作 `和 `题名` 进行判断 |
+| 如何识别引文关系 | 如果存在 `DOI`，则优先使用 `DOI` 进行匹配；否则通过 `一作`、`发表年份`、`文献来源`、`开始页` 进行判断  | 通过 `一作 `和 `题名` 进行判断 | 通过 `一作 `和 `题名` 进行判断 |
 | 如何去重 | 根据 `UT` 入藏号进行去重 | 根据 `一作` 和 `题名` 字段进行去重 | 根据 `EID` 字段进行去重 |
 
 ## TODO

@@ -10,14 +10,12 @@ class ComputeMetrics:
         self.source_type = source_type
 
     def __generate_table(self,use_cols:list,col:str,split_char=None,str_lower=False)->pd.DataFrame:
-        
         df = self.docs_table[use_cols]
+        
         # 如果字段包含多个值，则进行拆分
         if split_char:
-            
             df = df.dropna(subset=[col])
             df = df.astype({col:'str'})
-            
             if str_lower:
                 col_str_lower = df[col].str.lower()
                 df[col] = col_str_lower.str.split(split_char)

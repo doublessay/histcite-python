@@ -35,7 +35,6 @@ class RecognizeCommonReference:
 
 class RecognizeReference():
     """识别参考文献"""
-
     @staticmethod
     def recognize_wos_reference(docs_table:pd.DataFrame,
                                 reference_table:pd.DataFrame,
