@@ -11,8 +11,16 @@ def test_wos_cr():
     assert parsed_citation_dict['BP'][0]==932
 
 def test_cssci_cr():
-    cr_cell = '1..2021年度江苏省公共图书馆大数据统计报告\n2.吴建中.建设智慧图书馆，我们准备好了吗？.2022\n3..江苏省智慧图书馆体系建设方案通过专家论证.2021\n4.陈进.智慧图书馆的架构规划.数字图书馆论坛.2018.(6)\n5.梅宏.大数据导论.北京:高等教育出版社'
+    cr_cell = '1..2021年度江苏省公共图书馆大数据统计报告; 2.吴建中.建设智慧图书馆，我们准备好了吗？.2022;'
     parsed_citation_dict = ParseReference(0,cr_cell,'cssci').parse_cr_cell()
     assert parsed_citation_dict is not None
     assert parsed_citation_dict['first_AU'][0]=='吴建中'
     assert parsed_citation_dict['TI'][0]=='建设智慧图书馆，我们准备好了吗？'
+
+def test_scopus_cr():
+    cr_cell = 'Aone C., Halverson L., Hampton T., Ramos-Santacruz M., Sra: Description of the ie2 system used for muc-7, In Seventh Message Understanding Conference (MUC-7): Proceedings of a Conference Held in Fairfax, 1998, (1998); Appelt D., Et al., Sri International Fastus Systemmuc-6 Test Results and Analysis. in Sixth Message Understanding Conference (MUC-6): Proceedings of a Conference Held in Columbia, (1995); '
+    parsed_citation_dict = ParseReference(0,cr_cell,'scopus').parse_cr_cell()
+    assert parsed_citation_dict is not None
+    assert parsed_citation_dict['first_AU'][0]=='Aone C.'
+    assert parsed_citation_dict['first_AU'][1]=='Appelt D.'
+    assert parsed_citation_dict['TI'][0]=='sra: description of the ie2 system used for muc-7'

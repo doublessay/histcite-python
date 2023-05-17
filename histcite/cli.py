@@ -7,7 +7,7 @@ from histcite.network_graph import GraphViz
 def main():
     parser = argparse.ArgumentParser(description='A Python interface to histcite.')
     parser.add_argument('-f','--folder_path', type=str, required=True, help='folder path of the downloaded files')
-    parser.add_argument('-t','--source_type', type=str, required=True, choices=['wos','cssci'], help='source type of the downloaded files')
+    parser.add_argument('-t','--source_type', type=str, required=True, choices=['wos','cssci','scopus'], help='source type of the downloaded files')
     parser.add_argument('-n','--node_num', type=int, default=50, help='node number in the citation network graph')
     parser.add_argument('-g','--graph', action="store_true", help='generate graph file only')
     args = parser.parse_args()

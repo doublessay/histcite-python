@@ -3,7 +3,8 @@
 由于原引文分析工具 [HistCite](https://support.clarivate.com/ScientificandAcademicResearch/s/article/HistCite-No-longer-in-active-development-or-officially-supported) 已停止维护，目前国内普遍使用的为国科大某位同学在原程序基础上进行修复的版本 [HistCite Pro](https://zhuanlan.zhihu.com/p/20902898)，仅能在 `Windows` 平台上运行，存在诸多限制。借助 [pandas 2.0](https://pandas.pydata.org/docs/dev/whatsnew/v2.0.0.html) 和可视化工具 [Graphviz](https://graphviz.org)，本工具复刻了原 `HistCite` 的大部分功能，同时拓展了对其他数据源的支持，可以跨平台使用。
 
 最近更新：
-- `v0.2.0` 增加了对 `CSSCI` 数据库题录数据的支持，并对调用方式进行调整；
+- `v0.3.0` 增加了对 `Scopus` 数据库题录数据的支持；
+- `v0.2.0` 增加了对 `CSSCI` 数据库题录数据的支持；
 
 核心功能：
 - 生成引文网络图；
@@ -28,16 +29,17 @@ pip install histcite-python
 ## 数据准备
 | 数据来源 | 下载说明 |
 | :---: | --- |
-| `Web of Science` | 核心合集，格式选择 Tab delimited file/制表符分隔文件，导出内容选择 Full Record and Cited References/全记录与引用的参考文献 或者是 Custome selection/自定义选择项，全选字段 |
-| `CSSCI` | 从CSSCI数据库正常导出即可 |
-> 注：文件下载之后不要改名(会根据文件名识别有效的题录数据文件)，下载完成后放在一个单独的文件夹下。
+| `Web of Science` | `核心合集`，格式选择 `Tab delimited file/制表符分隔文件`，导出内容选择 `Full Record and Cited References/全记录与引用的参考文献` 或者是 `Custome selection/自定义选择项`，全选字段 |
+| `CSSCI` | 从 `CSSCI数据库` 正常导出即可 |
+| `Scopus` | 格式选择 `CSV` 文件，导出字段需要额外勾选 `Author keywords` 和 `Include references`，或者直接全选字段。不勾选 `Truncate to optimize for Excel`|
+> 注：文件下载之后不要改名(会根据文件名识别有效的题录数据文件)，下载完成后放在一个单独的文件夹内。
 
 ## 使用方法
 1、使用命令行工具，可用参数如下：
 |  | 参数 | 说明 |
 | :---: | :---: | --- |
 | -f | --folder_path | 下载的题录数据存放的文件夹路径，必须指定 |
-| -t | --source_type | 题录数据来源，可选 `wos` 或 `cssci`，必须指定 |
+| -t | --source_type | 题录数据来源，可选 `wos`、`cssci`、`scopus`，必须指定 |
 | -n | --node_num | 引文网络图中包含的节点数量，默认为 `50`，即 `LCS` 最高的 `50` 篇文献 |
 | -g | --graph | 是否仅生成图文件，指定该参数表示 `True`，无需传值 |
 
@@ -109,15 +111,12 @@ graph_node_file.to_excel(os.path.join(folder_path,'result','graph.node.xlsx'),in
 | 引文网络图 | 矢量图，比较细腻 | 位图，比较粗糙 |
 
 ## Q&A
-1、如何识别引文关系？  
-`Web of Science:` 每条文献元数据都包含 `CR` 字段，表示该文献的参考文献集合。发表时间等于或早于当前文献的其他文献为候选文献，如果这些候选文献存在 `DOI` 信息，则判断 `DOI` 是否在参考文献集合的 `DOI` 列表中；如果不存在 `DOI` ，则判断 `一作`、`发表年份`、`文献来源`、`开始页` 四个字段信息是否与参考文献集合的某条记录一致，一致则判断为引用。  
-`CSSCI:` 通过 `一作 `和 `题名` 两个字段进行判断。  
-
-2、如何去重？  
-`Web of Science:` 按照 `UT` 入藏号字段进行去重。  
-`CSSCI:` 按照 `一作` 和 `题名` 两个字段进行去重。
+|  | Web of Science | CSSCI | Scopus|
+| --- | --- | --- | --- |
+| 如何识别引文关系 | 如果存在 `DOI`，则优先使用 `DOI` 进行匹配；</br>否则通过 `一作`、`发表年份`、`文献来源`、`开始页` 进行判断  | 通过 `一作 `和 `题名` 进行判断 | 通过 `一作 `和 `题名` 进行判断 |
+| 如何去重 | 根据 `UT` 入藏号进行去重 | 根据 `一作` 和 `题名` 字段进行去重 | 根据 `EID` 字段进行去重 |
 
 ## TODO
 - [x] 支持 `CSSCI` 题录数据
-- [ ] 支持 `Scopus` 题录数据
+- [x] 支持 `Scopus` 题录数据
 - [ ] 支持 `PubMed` 题录数据

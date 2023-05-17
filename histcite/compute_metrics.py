@@ -40,7 +40,7 @@ class ComputeMetrics:
         return grouped_df.sort_values('Recs', ascending=False)
     
     def _generate_author_table(self):
-        if self.source_type == 'wos':
+        if self.source_type in ['wos','scopus']:
             use_cols = ['AU','LCS','TC']
         elif self.source_type == 'cssci':
             use_cols = ['AU','LCS']
@@ -49,7 +49,7 @@ class ComputeMetrics:
         return self.__generate_table(use_cols,'AU','; ')
     
     def _generate_keywords_table(self):
-        if self.source_type == 'wos':
+        if self.source_type in ['wos','scopus']:
             use_cols = ['DE','LCS','TC']
         elif self.source_type == 'cssci':
             use_cols = ['DE','LCS']
@@ -68,19 +68,19 @@ class ComputeMetrics:
     
     def _generate_records_table(self):
         """生成文献简表"""
-        if self.source_type == 'wos':
+        if self.source_type in ['wos','scopus']:
             use_cols = ['AU','TI','SO','LCS','TC','LCR','NR']
         elif self.source_type == 'cssci':
-            use_cols = ['AU','TI','SO','LCS','LCR']
+            use_cols = ['AU','TI','SO','LCS','LCR','NR']
         else:
             raise ValueError('Invalid source type')
         records_table = self.docs_table[use_cols]
-        if self.source_type == 'wos':
+        if self.source_type in ['wos','scopus']:
             records_table = records_table.rename(columns={'TC':'GCS','NR':'GCR'})
         return records_table
     
     def _generate_journal_table(self):
-        if self.source_type == 'wos':
+        if self.source_type in ['wos','scopus']:
             use_cols = ['SO','LCS','TC']
         elif self.source_type == 'cssci':
             use_cols = ['SO','LCS']
@@ -100,11 +100,11 @@ class ComputeMetrics:
         """生成参考文献表，按照引用次数降序排列，同时标记是否为本地文献"""
         if self.source_type == 'wos':
             check_cols = ['PY','J9','VL','BP']
-        elif self.source_type == 'cssci':
+        elif self.source_type in ['cssci','scopus']:
             check_cols = ['first_AU','TI']
         else:
             raise ValueError('Invalid source type')
-        use_cols = self.reference_table.columns.tolist()[:-1]
+        use_cols = self.reference_table.columns.tolist()[:-1]  
         reference_table = self.reference_table.groupby(use_cols,as_index=False).size()
         reference_table = reference_table.sort_values(by='size',ascending=False)
         reference_table = reference_table.rename(columns={'size':'Recs'})
@@ -125,6 +125,8 @@ class ComputeMetrics:
             self._generate_reference_table().to_excel(writer,sheet_name='Cited References',index=False)
             self._generate_keywords_table().to_excel(writer,sheet_name='Keywords')
             self._generate_year_table().to_excel(writer,sheet_name='Years')
-            self._generate_institution_table().to_excel(writer,sheet_name='Institutions')
-            if self.source_type == 'wos':
+            
+            if self.source_type in ['wos','cssci']:
+                self._generate_institution_table().to_excel(writer,sheet_name='Institutions')
+            if self.source_type in ['wos','scopus']:
                 self._generate_document_type_table().to_excel(writer,sheet_name='Document Type')

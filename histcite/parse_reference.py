@@ -5,26 +5,20 @@ class ParseReference:
         """Parse citation records from a cr cell
         doc_index: index of the record
         cr_cell: cr cell
-        source_type: wos|cssci
+        source_type: wos|cssci|scopus
         """
-        if source_type=='wos':
-            sep = '; '
-        elif source_type=='cssci':
-            sep = '; '
-        else:
-            raise ValueError('Invalid source type')
-        
+        sep = '; '
         try:
             self.cr_list = cr_cell.split(sep)
             self.cr_count = len(self.cr_list)
         except AttributeError:
             self.cr_count = 0
-        self.doc_index = doc_index
-        self.source_type = source_type
+        else:
+            self.doc_index = doc_index
+            self.source_type = source_type
 
     @staticmethod
-    def _parse_wos_cr(cr):
-        """Parse a single citation record"""
+    def _parse_wos_cr(cr:str):
         AU,PY,J9,VL,BP,DI = None,None,None,None,None,None
         cr_data = {}
 
@@ -69,14 +63,13 @@ class ParseReference:
             return cr_data
     
     @staticmethod
-    def _parse_cssci_cr(cr):
-
-        pattern = re.compile(r'(?<!\d)\.(?!\d)|(?<=\d)\.(?!\d)|(?<!\d)\.(?=\d)|(?<=\d{4})\.(?=\d{4})')
+    def _parse_cssci_cr(cr:str):
+        
+        au_pattern = re.compile(r'(?<!\d)\.(?!\d)|(?<=\d)\.(?!\d)|(?<!\d)\.(?=\d)|(?<=\d{4})\.(?=\d{4})')
         # 中文参考文献
         if re.search(r'[\u4e00-\u9fa5]',cr):
             try:
-                # _,AU,TI,_ = cr.split('.',3)
-                _,AU,TI,_ = pattern.split(cr,3)
+                _,AU,TI,_ = au_pattern.split(cr,3)
                 if ',' not in AU:
                     return {'first_AU':AU,'TI':TI}
             except ValueError:
@@ -87,23 +80,40 @@ class ParseReference:
             if index_AU := re.search(r'^(\d+\.(.*?))\.[A-Za-z"“\d]{1}[a-zA-Z\s\d]+',cr):
                 AU = index_AU.group(2)
                 if AU !='':
-                    # other = cr.replace(f'{AU}.','')
                     other = cr.replace(index_AU.group(1),'')
                     try:
-                        # _,TI,_ = other.split('.',2)
-                        _,TI,_ = pattern.split(other,2)
+                        _,TI,_ = au_pattern.split(other,2)
                         return {'first_AU':AU,'TI':TI}
                     except ValueError:
                         return None
                         
                 else:
                     try:
-                        _,_,TI,_ = pattern.split(cr,3)
+                        _,_,TI,_ = au_pattern.split(cr,3)
                     except ValueError:
                         _,_,TI,_ = cr.split('.',3)
-                    finally:
-                        return {'first_AU':AU,'TI':TI} # type:ignore
-                     
+                    return {'first_AU':AU,'TI':TI}
+    
+    @staticmethod
+    def _parse_scopus_cr(cr:str,TI_pattern):
+        
+        if TI := TI_pattern.search(cr):
+            TI = TI[0]
+            if re.match('^[a-z]',TI):
+                # print('No TI:',cr)
+                return None
+            else:
+                left_cr = cr.replace(TI,'')
+                try:
+                    first_AU = left_cr.split(',',1)[0]
+                    if re.match('[A-Za-z]',first_AU):
+                        return {'first_AU':first_AU,'TI':TI.strip(',;?.').lower()}
+                    else:
+                        # print('No AU:',cr)
+                        return None
+                except IndexError:
+                    return None
+                
     def parse_cr_cell(self):
         if self.cr_count == 0:
             return None
@@ -114,14 +124,17 @@ class ParseReference:
         elif self.source_type == "cssci":
             parsed_cr_list = [self._parse_cssci_cr(i) for i in self.cr_list]
             keys = ['first_AU','TI']
+        elif self.source_type == "scopus":
+            TI_pattern = re.compile(r'\b(?:[^\.,\s]+\s){4,}[^\.,\s]+(?:,|\?|\.|;|$)')
+            parsed_cr_list = [self._parse_scopus_cr(i,TI_pattern) for i in self.cr_list]
+            keys = ['first_AU','TI']
         else:
-            raise ValueError()
+            raise ValueError('Invalid source type')
         
         result = {key:[] for key in keys}
         for single in parsed_cr_list:
             if single is not None:
                 for key in keys:
                     result[key].append(single[key])
-        
         result['doc_index'] = self.doc_index
         return result

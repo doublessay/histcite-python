@@ -1,0 +1,354 @@
+first_AU,TI,doc_index
+Aone C.,sra: description of the ie2 system used for muc-7,0
+Appelt D.,sri international fastus systemmuc-6 test results and analysis,0
+Mikheev A.,named entity recognition without gazetteers,0
+Rabiner L.R.,a tutorial on hidden markov models and selected applications in speech recognition,0
+Li L.,biomedical named entity recognition with cnn-blstm-crf,0
+Hu T.,news named entity recognition and sentiment classification based on attention-based bi-directional long short-term memory neural network and conditional random field,0
+Li N.,bert-idcnn-crf for named entity recognition in chinese,0
+Zhang Y.,named entity recognition method of elementary mathematical text based on bert,0
+Wei Z.,a novel cascade binary tagging framework for relational triple extraction,0
+Majumder A.,deep learning-based approach using word and character embedding for named entity recognition from hindi–english tweets,0
+Zhai S.,knowledge graph entity extraction based on bilstm-crf,0
+Zeng Q.,electronic medical record named entity recognition combined with self-attention bilstm-crf,0
+Zhang X.,bg-efrl: chinese named entity recognition method and application based on enhanced feature representation,0
+Zhang Y.,chinese ner using lattice lstm,0
+Gui T.,cnn-based chinese ner with lexicon rethinking,0
+Sui D.,leverage lexical knowledge for chinese named entity recognition via collaborative graph network,0
+Sun Z.,chinesebert: chinese pretraining enhanced by glyph and pinyin information,0
+Shaw P.,self-attention with relative position representations,0
+Li X.,flat: chinese ner using flat-lattice transformer,0
+Vaswani A.,attention is all you need,0
+Su J.,roformer: enhanced transformer with rotary position embedding,0
+Jiang M.,leveraging part-of-speech tagging features and a novel regularization strategy for chinese medical named entity recognition,0
+Srivastava N.,dropout: a simple way to prevent neural networks from overfitting,0
+Bekoulis G.,adversarial training for multi-context joint entity and relation extraction,0
+Qiu J.,artificial intelligence security in 5g networks: adversarial examples for estimating a travel time task,0
+Qiu J.,the security of internet of vehicles network: adversarial examples for trajectory mode detection,0
+Wu S.,mect: multi-metadata embedding based cross-transformer for chinese named entity recognition,0
+Shaw P.,self-attention with relative position representations,0
+Su J.,global pointer: novel efficient span-based approach for named entity recognition,0
+Wang Y.,tplinker: single-stage joint extraction of entities and relations through token pair linking,0
+Sun Y.,circle loss: a unified perspective of pair similarity optimization,0
+Levow G.-A.,the third international chinese language processing bakeoff: word segmentation and named entity recognition,0
+Peng N.,named entity recognition for chinese social media with jointly trained embeddings,0
+Xinbang H.,chinese named entity recognition based on knowledge enhancement,0
+Gui T.,a lexicon-based graph neural network for chinese ner,0
+Liu W.,lexicon enhanced chinese sequence labeling using bert adapter,0
+He H.,f-score driven max margin neural network for named entity recognition in chinese social media,0
+Cao P.,adversarial transfer learning for chinese named entity recognition with self-attention mechanism,0
+Peng N.,improving named entity recognition for chinese social media with word segmentation representation learning,0
+He H.,a unified model for cross-domain and semi-supervised named entity recognition in chinese social media,0
+Amman B.R.,marburgvirus resurgence in kitaka mine bat population after extermination attempts,1
+Artene C.-G.,using bert for multi-label multi-language web page classification,1
+Barbaresi A.,trafilatura: a web scraping library and command-line tool for text discovery and extraction,1
+Beltagy I.,scibert: a pretrained language model for scientific text,1
+Benitez-Lopez A.,intact but empty forests? patterns of hunting-induced mammal defaunation in the tropics,1
+Blasi D.,systematic inequalities in language technology performance across the world's languages,1
+Bojanowski P.,enriching word vectors with subword information,1
+Cornford R.,automated synthesis of biodiversity knowledge requires better tools and standardised research output,1
+Correia R.A.,digital data sources and methods for conservation culturomics,1
+Dahlgaard S.,practical hash functions for similarity estimation and dimensionality reduction,1
+Devlin J.,bert: pre-training of deep bidirectional transformers for language understanding,1
+Di Minin E.,how to address data privacy concerns when using social media data in conservation science,1
+Dixon L.,measuring and mitigating unintended bias in text classification,1
+Dor L.E.,active learning for bert: an empirical study,1
+Farrell M.J.,past and future uses of text mining in ecology and evolution,1
+Fiok K.,text guide: improving the quality of long text classification by a text selection method based on feature importance,1
+Frick W.F.,a review of the major threats and challenges to global bat conservation,1
+Gonzalez-Carvajal S.,comparing bert against traditional machine learning text classification,1
+Gupta A.,effective few-shot classification with transfer learning,1
+Hughes A.C.,sampling biases shape our view of the natural world,1
+Indraswari K.,it's in the news: characterising indonesia's wild bird trade network from media-reported seizure incidents,1
+IUCN,iucn - cmp unified classification of direct threats,1
+Jaung W.,a big-data analysis of human-nature relations in newspaper coverage,1
+Johnson T.F.,classecol: classifiers to understand public opinions of nature,1
+Joppa L.,filling in biodiversity threat gaps,1
+Kidd L.R.,tweeting for their lives: visibility of threatened species on twitter,1
+Kingma D.P.,adam: a method for stochastic optimization,1
+Kowsari K.,text classification algorithms: a survey,1
+Kulkarni R.,automated retrieval of information on threatened species from online sources using machine learning,1
+Lewis D.D.,a sequential algorithm for training text classifiers,1
+Liu Y.,an evaluation of transfer learning for classifying sales engagement emails at large scale,1
+Liu H.,the authors matter: understanding and mitigating implicit bias in deep text classification,1
+Marshall B.M.,thousands of reptile species threatened by under-regulated global trade,1
+Millard J.W.,the species awareness index as a conservation culturomics metric for public biodiversity awareness,1
+Nguyen Q.T.,fine-tuning bert for sentiment analysis of vietnamese reviews,1
+Padurariu C.,dealing with data imbalance in text classification,1
+Salton G.,developments in automatic text retrieval,1
+Schroder C.,small-text: active learning for text classification in python,1
+Settles B.,an analysis of active learning strategies for sequence labeling tasks,1
+Seymour E.,cost sensitive hierarchical document classification to triage pubmed abstracts for manual curation,1
+Stringham O.,text classification to streamline online wildlife trade analyses,1
+Stringham O.,a guide to using the internet to monitor and quantify the wildlife trade,1
+Sun C.,how to fine-tune bert for text classification,1
+Thomas E.M.,shifts of trade in javan ferret badgers melogale orientalis from wildlife markets to online platforms: implications for conservation policy,1
+Toivonen T.,social media data for conservation science: a methodological overview,1
+Uysal A.K.,the impact of preprocessing on text classification,1
+Vaswani A.,attention is all you need,1
+Vig J.,a multiscale visualization of attention in the transformer model,1
+Wagh V.,comparative study of long document classification,1
+Wolf T.,transformers: state-of-the-art natural language processing,1
+Xiao X.,animal sales from wuhan wet markets immediately prior to the covid-19 pandemic,1
+Xu Q.,use of machine learning to detect wildlife product promotion and sales on twitter,1
+Yuan M.,cold-start active learning through self-supervised language modeling,1
+Hu G.-M.,visualizing the gpcr network: classification and evolution,2
+Rosenbaum D.M.,the structure and function of g-protein-coupled receptors,2
+Gacasan S.B.,protein-coupled receptors: the evolution of structural insight,2
+Katritch V.,diversity and modularity of g protein-coupled receptor structures,2
+Zhou Q.,common activation mechanism of class a gpcrs,2
+Hauser A.S.,gpcr activation mechanisms across classes and macro/microscales,2
+Hilger D.,structure and dynamics of gpcr signaling complexes,2
+Sloop K.W.,the current state of gpcr‐based drug discovery to treat metabolic disease,2
+Hauser A.S.,trends in gpcr drug discovery: new agents,2
+Hauser A.S.,pharmacogenomics of gpcr drug targets,2
+Mayr L.M.,novel trends in high-throughput screening,2
+Jenkins J.L.,virtual screening to enrich hit lists from high‐throughput screening: a case study on small‐molecule inhibitors of angiogenin,2
+Katsila T.,computational approaches in target identification and drug discovery,2
+Ripphausen P.,state-of-the-art in ligand-based virtual screening,2
+Lyne P.D.,structure-based virtual screening: an overview,2
+Lionta E.,structure-based virtual screening for drug discovery: principles,2
+Ballante F.,structure-based virtual screening for ligands of g protein–coupled receptors: what can molecular docking do for you,2
+Kooistra A.J.,gpcrdb in 2021: integrating gpcr sequence,2
+Yan X.,chemical structure similarity search for ligand-based virtual screening: methods and computational resources,2
+Yang S.-Y.,pharmacophore modeling and applications in drug discovery: challenges and recent advances,2
+Bian Y.,computational fragment-based drug design: current trends,2
+Cavasotto C.N.,homology modeling in drug discovery: current trends and applications,2
+Wink L.H.,a benchmark study of loop modeling methods applied to g protein-coupled receptors,2
+Irwin J.J.,zinc− a free database of commercially available compounds for virtual screening,2
+Huang S.-Y.,advances and challenges in protein-ligand docking,2
+Yasi E.A.,advances in g protein-coupled receptor high-throughput screening,2
+Wheatley M.,lifting the lid on gpcrs: the role of extracellular loops,2
+Baker D.,protein structure prediction and structural genomics,2
+Rataj K.,impact of template choice on homology model efficiency in virtual screening,2
+Shahaf N.,how to choose the suitable template for homology modelling of gpcrs: 5‐ht7 receptor as a test case,2
+Ngo T.,orphan receptor ligand discovery by pickpocketing pharmacological neighbors,2
+Ngo T.,retraction note: orphan receptor ligand discovery by pickpocketing pharmacological neighbors,2
+Castleman P.N.,gpcr homology model template selection benchmarking: global versus local similarity measures,2
+Sandal M.,gomodo: a gpcrs online modeling and docking webserver,2
+Worth C.L.,0—a fragment-based molecular modeling web tool for class a g-protein coupled receptors,2
+Esguerra M.,gpcr-modsim: a comprehensive web based solution for modeling g-protein coupled receptors,2
+Mariani V.,assessment of template based protein structure predictions in casp9,2
+Jabeen A.,bio-gats: a tool for automated gpcr template selection through a biophysical approach for homology modeling,2
+Kufareva I.,advances in gpcr modeling evaluated by the gpcr dock 2013 assessment: meeting new challenges,2
+Pearce R.,deep learning techniques have significantly impacted protein structure prediction and protein design,2
+Jumper J.,highly accurate protein structure prediction with alphafold,2
+Torrisi M.,deep learning methods in protein structure prediction,2
+Zheng W.,deep‐learning contact‐map guided protein structure prediction in casp13,2
+Wang S.,accurate de novo prediction of protein contact map by ultra-deep learning model,2
+Senior A.W.,improved protein structure prediction using potentials from deep learning,2
+Varadi M.,alphafold protein structure database: massively expanding the structural coverage of protein-sequence space with high-accuracy models,2
+Pandy-Szekeres G.,gpcrdb in 2023: state-specific structure models using alphafold2 and new ligand resources,2
+Heo L.,multi‐state modeling of g‐protein coupled receptors at experimental accuracy,2
+Venkatakrishnan A.J.,molecular signatures of g-protein-coupled receptors,2
+De Filippo E.,a2a and a2b adenosine receptors: the extracellular loop 2 determines high (a2a) or low affinity (a2b) for adenosine,2
+Seibt B.F.,the second extracellular loop of gpcrs determines subtype-selectivity and controls efficacy as evidenced by loop exchange study at a2 adenosine receptors,2
+Woolley M.J.,understanding the common themes and diverse roles of the second extracellular loop (ecl2) of the gpcr super-family,2
+Won J.,galaxygpcrloop: template-based and ab initio structure sampling of the extracellular loops of g-protein-coupled receptors,2
+Barozet A.,current approaches to flexible loop modeling,2
+Fleishman S.J.,rosettascripts: a scripting language interface to the rosetta macromolecular modeling suite,2
+Kolodny R.,inverse kinematics in biology: the protein loop closure problem,2
+Szwabowski G.L.,benchmarking gpcr homology model template selection in combination with de novo loop generation,2
+Lavecchia A.,machine-learning approaches in drug discovery: methods and applications,2
+Cereto-Massague A.,molecular fingerprint similarity search in virtual screening,2
+Sheridan R.P.,why do we need so many chemical similarity search methods,2
+Muegge I.,an overview of molecular fingerprint similarity search in virtual screening,2
+Capecchi A.,one molecular fingerprint to rule them all: drugs,2
+Nikolova N.,approaches to measure chemical similarity–a review,2
+Dudek A.Z.,computational methods in developing quantitative structure-activity relationships (qsar): a review,2
+Kumar A.,advances in the development of shape similarity methods and their application in drug discovery,2
+Nicholls A.,molecular shape and electrostatics in the encoding of relevant chemical information,2
+Hawkins P.C.D.,ligand-based methods in gpcr computer-aided drug design,2
+Bajusz D.,why is tanimoto index an appropriate choice for fingerprint-based similarity calculations,2
+Todeschini R.,similarity coefficients for binary chemoinformatics data: overview and extended comparison using simulated and real data sets,2
+Holliday J.D.,grouping of coefficients for the calculation of inter-molecular similarity and dissimilarity using 2d fragment bit-strings,2
+Chen X.,performance of similarity measures in 2d fragment-based similarity searching: comparison of structural descriptors and similarity coefficients,2
+Levit A.,the bitter pill: clinical drugs that activate the human bitter taste receptor tas2r14,2
+Gianella-Borradori M.,ligand-based virtual screening identifies a family of selective cannabinoid receptor 2 agonists,2
+Zhang X.,in-silico guided discovery of novel ccr9 antagonists,2
+Ehrlich P.,über den jetzigen stand der chemotherapie,2
+Kier L.B.,molecular orbital calculation of preferred conformations of acetylcholine,2
+Guner O.F.,setting the record straight: the origin of the pharmacophore concept,2
+Wermuth C.-G.,glossary of terms used in medicinal chemistry (iupac recommendations 1998),2
+Gund P.,evolution of the pharmacophore concept in pharmaceutical research,2
+Schaller D.,next generation 3d pharmacophore modeling,2
+Li H.,hypogen: an automated system for generating 3d predictive pharmacophore models,2
+Clement O.O.,hiphop: pharmacophores based on multiple common feature alignments,2
+Seidel T.,3d pharmacophore modeling techniques in computer-aided molecular design using ligandscout,2
+Braga R.C.,assessing the performance of 3d pharmacophore models in virtual screening: how good are they,2
+Seidel T.,strategies for 3d pharmacophore-based virtual screening,2
+Wolber G.,ligandscout: 3-d pharmacophores derived from protein-bound ligands and their use as virtual screening filters,2
+Hecker E.A.,use of catalyst pharmacophore models for screening of large combinatorial libraries,2
+Toba S.,using pharmacophore models to gain insight into structural binding and virtual screening: an application study with cdk2 and human dhfr,2
+Vadivelan S.,virtual screening studies to design potent cdk2-cyclin a inhibitors,2
+Langer T.,pharmacophore modelling: applications in drug discovery,2
+Wang M.,identification of novel antagonists targeting cannabinoid receptor 2 using a multi-step virtual screening strategy,2
+Dixon S.L.,phase: a new engine for pharmacophore perception,2
+Li N.,combination of docking-based and pharmacophore-based virtual screening identifies novel agonists that target the urotensin receptor,2
+Kirchweger B.,in silico workflow for the discovery of natural products activating the g protein-coupled bile acid receptor 1,2
+Zhang G.,discovery of novel antagonists of human neurotensin receptor 1 on the basis of ligand and protein structure,2
+Erlanson D.A.,introduction to fragment-based drug discovery,2
+Congreve M.,recent developments in fragment-based drug discovery,2
+Murray C.W.,experiences in fragment-based drug discovery,2
+Loving K.,computational approaches for fragment-based and de novo design,2
+Kumar A.,fragment based drug design: from experimental to computational approaches,2
+Sheng C.,fragment informatics and computational fragment‐based drug design: an overview and update,2
+Goodford P.J.A.,computational procedure for determining energetically favorable binding sites on biologically important macromolecules,2
+Kozakov D.,the ftmap family of web servers for determining and characterizing ligand-binding hot spots of proteins,2
+Miranker A.,functionality maps of binding sites: a multiple copy simultaneous search method,2
+De Graaf C.,crystal structure-based virtual screening for fragment-like ligands of the human histamine h1 receptor,2
+Brown A.J.H.,from structure to clinic: design of a muscarinic m1 receptor agonist with the potential to treat alzheimer's disease,2
+Edelsbrunner H.,measuring proteins and voids in proteins,2
+Sanders M.P.A.,from the protein's perspective: the benefits and challenges of protein structure-based pharmacophore modeling,2
+Klabunde T.,sequence-derived three-dimensional pharmacophore models for g-protein-coupled receptors and their application in virtual screening,2
+Sanders M.P.A.,snooker: a structure-based pharmacophore generation tool applied to class a gpcrs,2
+Dai S.,pharmacophore‐map‐pick: a method to generate pharmacophore models for all human gpcrs,2
+Jeong P.,discovery of novel biased opioid receptor ligands through structure‐based pharmacophore virtual screening and experiment,2
+Poli G.,discovery of novel μ-opioid receptor inverse agonist from a combinatorial library of tetrapeptides through structure-based virtual screening,2
+Zell L.,identification of novel dopamine d2 receptor ligands—a combined in silico/in vitro approach,2
+Lipinski C.A.,experimental and computational approaches to estimate solubility and permeability in drug discovery and development settings,2
+Baell J.B.,new substructure filters for removal of pan assay interference compounds (pains) from screening libraries and for their exclusion in bioassays,2
+Li Q.,pubchem as a public resource for drug discovery,2
+Pence H.E.,chemspider: an online chemical information resource,2
+Schwab C.H.,conformations and 3d pharmacophore searching,2
+Castleman P.,ligand-based g protein coupled receptor pharmacophore modeling: assessing the role of ligand function in model development,2
+Griewel A.,conformational sampling for large-scale virtual screening: accuracy versus ensemble size,2
+Cappel D.,exploring conformational search protocols for ligand-based virtual screening and 3-d qsar modeling,2
+Sastry G.M.,rapid shape-based ligand alignment and virtual screening method based on atom/feature-pair similarities and volume overlap scoring,2
+Hawkins P.C.D.,conformation generation: the state of the art,2
+Chen I.-J.,conformational sampling of druglike molecules with moe and catalyst: implications for pharmacophore modeling and virtual screening,2
+Waszkowycz B.,outstanding challenges in protein–ligand docking and structure‐based virtual screening,2
+Rarey M.,the particle concept: placing discrete water molecules during protein‐ligand docking predictions,2
+Sousa S.F.,protein–ligand docking: current status and future challenges,2
+Pagadala N.S.,software for molecular docking: a review,2
+Yadava U.,search algorithms and scoring methods in protein-ligand docking,2
+Wang C.,improved side‐chain modeling for protein–protein docking,2
+Ramirez D.,is it reliable to take the molecular docking top scoring position as the best solution without considering available structural data,2
+Ortiz A.R.,prediction of drug binding affinities by comparative binding energy analysis,2
+Jones G.,development and validation of a genetic algorithm for flexible docking,2
+Yin S.,medusascore: an accurate force field-based scoring function for virtual drug screening,2
+Liu J.,classification of current scoring functions,2
+Friesner R.A.,glide: a new approach for rapid,2
+Bohm H.-J.,prediction of binding constants of protein ligands: a fast method for the prioritization of hits obtained from de novo design or 3d database search programs,2
+Eldridge M.D.,the development of a fast empirical scoring function to estimate the binding affinity of ligands in receptor complexes,2
+Gohlke H.,knowledge-based scoring function to predict protein-ligand interactions,2
+DeWitte R.S.,smog: de novo design method based on simple,2
+Muegge I.,a general and fast scoring function for protein− ligand interactions: a simplified potential approach,2
+Wojcikowski M.,performance of machine-learning scoring functions in structure-based virtual screening,2
+Li H.,machine‐learning scoring functions for structure‐based virtual screening,2
+Wang R.,further development and validation of empirical scoring functions for structure-based binding affinity prediction,2
+Li L.,support vector regression scoring of receptor–ligand complexes for rank-ordering and virtual screening of chemical libraries,2
+Ding B.,characterization of small molecule binding,2
+Thomas M.,comparison of structure-and ligand-based scoring functions for deep generative models: a gpcr case study,2
+Huang N.,benchmarking sets for molecular docking,2
+Wang D.,improving the virtual screening ability of target-specific scoring functions using deep learning methods,2
+Shen C.,beware of the generic machine learning-based scoring functions in structure-based virtual screening,2
+Shen C.,accuracy or novelty: what can we gain from target-specific machine-learning-based scoring functions in virtual screening,2
+Reau M.,decoys selection in benchmarking datasets: overview and perspectives,2
+Adeshina Y.O.,machine learning classification can reduce false positives in structure-based virtual screening,2
+Ballester P.J.,a machine learning approach to predicting protein–ligand binding affinity with applications to molecular docking,2
+Durrant J.D.,0: a neural-network receptor–ligand scoring function,2
+Sotriffer C.A.,sfcscore: scoring functions for affinity prediction of protein–ligand complexes,2
+Adamuthe A.C.,technology forecasting: a case study of computational technologies,3
+Ali F.,traffic accident detection and condition analysis based on social networking data,3
+Baror S.O.,a natural human language framework for digital forensic readiness in the public cloud,3
+Bastian M.,gephi: an open source software for exploring and manipulating networks,3
+Behpour S.,automatic trend detection: time-biased document clustering,3
+Bengisu M.,forecasting emerging technologies with the aid of science and technology databases,3
+Berry M.W.,survey of text mining ii: clustering,3
+Bouma G.,normalized (pointwise) mutual information in collocation extraction,3
+Burmaoglu S.,analysing the theoretical roots of technology emergence: an evolutionary perspective,3
+Cabezas J.,detecting emotional evolution on twitter during the covid-19 pandemic using text analysis,3
+Chandrayan S.,a brief survey of text mining and its applications,3
+Chen H.,topic-based technological forecasting based on patent data: a case study of australian patents from 2000 to 2014,3
+Datta S.,a generative model for scientific concept hierarchies,3
+Datta P.,2020 ieee international conference on big data (big data),3
+Dang S.,a review of text mining techniques associated with various application areas,3
+De Silva M.,does affective evaluation matter for the success of university-industry collaborations? a sentiment analysis of university-industry collaborative project reports,3
+Del Vecchio M.,improving productivity in hollywood with data science: using emotional arcs of movies to drive product and service innovation in entertainment industries,3
+Delgosha M.S.,discovering iot implications in business and management: a computational thematic analysis,3
+Denter N.M.,forecasting future bigrams and promising patents: introducing text-based link prediction,3
+Du J.,using machine learning-based approaches for the detection and classification of human papillomavirus vaccine misinformation: infodemiology study of reddit discussions,3
+Fantin Irudaya Raj E.,internet of things-based smart transportation system for smart cities,3
+Gupta R.K.,prediction of research trends using lda based topic modeling,3
+Haleem A.,technology forecasting (tf) and technology assessment (ta) methodologies: a conceptual review,3
+Hassani H.,text mining in big data analytics,3
+Howard M.D.,entrepreneurial identity and strategic disclosure: founder ceos and new venture media strategy,3
+Hu K.,understanding the topic evolution of scientific literatures like an evolving city: using google word2vec model and spatial autocorrelation analysis,3
+Huang L.,overlapping community discovery for identifying key research themes,3
+Huang S.,feature extraction and representation of urban road networks based on travel routes,3
+Huang H.C.,the innovative fulcrums of technological interdisciplinarity: an analysis of technology fields in patents,3
+Jatnika D.,word2vec model analysis for semantic similarities in english words,3
+Jebari C.,the use of citation context to detect the evolution of research topics: a large-scale analysis,3
+Jee J.,six different approaches to defining and identifying promising technology through patent analysis,3
+Jin G.,a korean named entity recognition method using bi-lstm-crf and masked self-attention,3
+Jissink T.,forward-looking search during innovation projects: under which conditions it impacts innovativeness,3
+Jung H.,research trends in text mining: semantic network and main path analysis of selected journals,3
+Khan M.,text mining challenges and applications,3
+Kim G.,a novel approach to forecast promising technology through patent analysis,3
+Kim J.,how to develop data-driven technology roadmaps: the integration of topic modeling and link prediction,3
+Klavans R.,a novel approach to predicting exceptional growth in research,3
+Kumar S.,applications of text mining in services management: a systematic literature review,3
+Lannelongue L.,green algorithms: quantifying the carbon footprint of computation,3
+Lee S.,foresight of promising technologies for healthcare-iot convergence service by patent analysis,3
+Li Y.,word embedding for understanding natural language: a survey,3
+Li X.,forecasting technology trends using text mining of the gaps between science and technology: the case of perovskite solar cell technology,3
+Liang Z.,combining deep neural network and bibliometric indicator for emerging research topic prediction,3
+Liu J.,technology forecasting based on topic analysis and social network analysis: a case study focusing on gene editing patents,3
+Lu W.,detecting research topic trends by author-defined keyword frequency,3
+Lyu J.C.,covid-19 vaccine–related discussion on twitter: topic modeling and sentiment analysis,3
+Markou I.,predicting taxi demand hotspots using automated internet search queries,3
+Massey D.,engagement with covid-19 public health measures in the united states: a cross-sectional social media analysis from june to november 2020,3
+Meissner D.,handbook of innovation indicators and measurement,3
+Mikolov T.,efficient estimation of word representations in vector space,3
+Modgil S.,has covid-19 accelerated opportunities for digital entrepreneurship? an indian perspective,3
+Mohamed T.,long short-term memory neural networks for rna viruses mutations prediction,3
+Mohammed A.H.K.,iot text analytics in smart education and beyond,3
+Moon J.,pop-on: prediction of process using one-way language model based on nlp approach,3
+Mun C.,function score-based technological trend analysis,3
+Nayak A.S.,survey on pre-processing techniques for text mining,3
+Nazarenko A.,applying digital technologies in technology roadmapping to overcome individual biased assessments,3
+Ozansoy Cadirci T.,26 years left behind: a historical and predictive analysis of electronic business research,3
+Ozcan S.,technology roadmapping using text mining: a foresight study for the retail industry,3
+Pandelea V.,emotion recognition on edge devices: training and deployment,3
+Park G.,computers as social actors? examining how users perceive and interact with virtual influencers on social media,3
+Park H.,twenty years of technology and strategic roadmapping research: a school of thought perspective,3
+Pitt C.,a bibliographic analysis of 20 years of research on innovation and new product development in technology and innovation management (tim) journals,3
+Pollack C.C.,language and sentiment regarding telemedicine and covid-19 on twitter: longitudinal infodemiology study,3
+Porter A.L.,tech mining: exploiting new technologies for competitive advantage,3
+Porter A.L.,emergence scoring to identify frontier r&d topics and key players,3
+Qiu Z.,technology forecasting based on semantic and citation analysis of patents: a case of robotics domain,3
+Rehurek R.,software framework for topic modelling with large corpora,3
+Rosenberg A.,v-measure: a conditional entropy-based external cluster evaluation measure,3
+Rotolo D.,what is an emerging technology,3
+Roy K.C.,a multilabel classification approach to identify hurricane-induced infrastructure disruptions using social media data,3
+Sakahira F.,designing cascading disaster networks by means of natural language processing,3
+Small H.,identifying emerging topics in science and technology,3
+Song G.,a sentiment-aware contextual model for real-time disaster prediction using twitter data,3
+Sun Z.,mobilebert: a compact task-agnostic bert for resource-limited devices,3
+Tang K.Y.,trends in artificial intelligence-supported e-learning: a systematic review and co-citation network analysis (1998–2019),3
+Thakur K.,an overview of text mining: application and free software tools,3
+Vahidnia S.,embedding-based detection and extraction of research topics from academic documents using deep clustering,3
+Verma S.,investigating the emerging covid-19 research trends in the field of business and management: a bibliometric analysis approach,3
+Vinh N.X.,information theoretic measures for clusterings comparison: variants,3
+von Delft S.,business models in process industries: emerging trends and future research,3
+Wang Y.Y.,consumer preferences for electric vehicle charging infrastructure based on the text mining method,3
+Wei W.,short text data model of secondary equipment faults in power grids based on lda topic model and convolutional neural network,3
+Weiss S.M.,text mining: predictive methods for analyzing unstructured information,3
+Wilk V.,the state of# digitalentrepreneurship: a big data leximancer analysis of social media activity,3
+Xiao D.,a3id: an automatic and interpretable implicit interference detection method for smart home via knowledge graph,3
+Yun S.,from stones to jewellery: investigating technology opportunities from expired patents,3
+Zeng M.A.,foresight by online communities–the case of renewable energies,3
+Zhang Y.,detecting and predicting the topic change of knowledge-based systems: a topic-based bibliometric analysis from 1991 to 2016,3
+Zhou R.,the main trends for multi-tier supply chain in industry 4,3
+Zhou Y.,forecasting emerging technologies using data augmentation and deep learning,3
+Zou W.,recent advances and a roadmap to wearable uv sensor technologies,3
+Shankland S.,computing guru criticizes chatgpt ai tech for making things up,4
+Wolfram S.,what is chatgpt doing and why does it work,4
+Perry N.,do users write more insecure code with ai assistants,4
+Patterson D.A.,the carbon footprint of machine learning training will plateau,4
+Tantithamthavorn C.,explainable ai for se: experts' interviews,4
+Brundage M.,lessons learned on language model safety and misuse,4
+Carleton A.,architecting the future of software engineering: a national agenda for software engineering research and development,4
+Brown T.B.,language models are few-shot learners,4
+Ozkaya I.,a paradigm shift in automating software engineering tasks: bots,4
