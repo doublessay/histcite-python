@@ -67,9 +67,9 @@ class ComputeMetrics:
     def _generate_records_table(self):
         """生成文献简表"""
         if self.source_type in ['wos','scopus']:
-            use_cols = ['AU','TI','SO','LCS','TC','LCR','NR']
+            use_cols = ['AU','TI','SO','PY','LCS','TC','LCR','NR','file source']
         elif self.source_type == 'cssci':
-            use_cols = ['AU','TI','SO','LCS','LCR','NR']
+            use_cols = ['AU','TI','SO','PY','LCS','LCR','NR','file source']
         else:
             raise ValueError('Invalid source type')
         records_table = self.docs_table[use_cols]

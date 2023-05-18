@@ -47,14 +47,20 @@ class ProcessFile:
         self.folder_path = folder_path
         self.source_type = source_type
         if source_type=='wos':
-            self.file_name_list = [i for i in os.listdir(folder_path) if i[:9]=='savedrecs']
+            self.file_name_list = [i.split('.')[0] for i in os.listdir(folder_path) if i[:9]=='savedrecs']
         elif source_type=='cssci':
             self.file_name_list = [i for i in os.listdir(folder_path) if i[:3]=='LY_']
         elif source_type=='scopus':
-            self.file_name_list = [i for i in os.listdir(folder_path) if i[:6]=='scopus']
+            self.file_name_list = [i.split('.')[0] for i in os.listdir(folder_path) if i[:6]=='scopus']
         else:
             raise ValueError('Invalid source type')
         
+        self.file_name_list.sort()
+        if source_type == 'wos':
+            self.file_name_list = [i+'.txt' for i in self.file_name_list]
+        elif source_type == 'scopus':
+            self.file_name_list = [i+'.csv' for i in self.file_name_list]
+
     def _read_wos_file(self,file_name:str)->pd.DataFrame:
         """读取wos表单"""
         use_cols = ['AU','TI','SO','DT','CR','DE','C3','NR','TC','Z9','J9','PY','VL','BP','DI','UT']
@@ -69,6 +75,7 @@ class ProcessFile:
         # 提取一作
         first_au = df['AU'].apply(ProcessWosFile.extract_first_author)
         df.insert(1,'first_AU',first_au)
+        df['file source'] = file_name
         return df
     
     def _read_cssci_file(self,file_name:str)->pd.DataFrame:
@@ -98,6 +105,7 @@ class ProcessFile:
         df['C3'] = df['C3'].apply(ProcessCssciFile.process_org)
         df['CR'] = df['CR'].str.replace('\n','; ')
         df['NR'] = df['CR'].str.count('; ')
+        df['file source'] = file_name
         return df
     
     def _read_scopus_file(self,file_name:str)->pd.DataFrame:
@@ -108,6 +116,7 @@ class ProcessFile:
         df.columns = ['AU','TI','PY','SO','VL','IS','TC','DI','C3','DE','CR','DT','EID']
         df['NR'] = df['CR'].str.count('; ')
         df['first_AU'] = ProcessScopusFile.extract_first_author(df['AU'])
+        df['file source'] = file_name
         return df
     
     def concat_table(self):
@@ -147,7 +156,7 @@ class ProcessFile:
         print(f'共读取 {original_num} 条数据，去重后剩余 {current_num} 条')
         
         # 按照年份进行排序
-        docs_table = docs_table.sort_values(by='PY',ignore_index=True)
+        # docs_table = docs_table.sort_values(by='PY',ignore_index=True)
         docs_table.insert(0,'doc_index',docs_table.index)
 
         # scopus题名转小写

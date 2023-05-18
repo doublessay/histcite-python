@@ -32,7 +32,7 @@ pip install histcite-python
 | `Web of Science` | `核心合集`，格式选择 `Tab delimited file/制表符分隔文件`，导出内容选择 `Full Record and Cited References/全记录与引用的参考文献` 或者是 `Custome selection/自定义选择项`，全选字段； |
 | `CSSCI` | 从 `CSSCI数据库` 正常导出即可； |
 | `Scopus` | 格式选择 `CSV` 文件，导出字段需要额外勾选 `Author keywords` 和 `Include references`，或者直接全选字段。取消勾选 `Truncate to optimize for Excel`； |
-> 注：文件下载之后不要改名(会根据文件名识别有效的题录数据文件)，下载完成后放在一个单独的文件夹内。
+>⚠️ 文件下载之后不要改名(会根据文件名识别有效的题录数据文件)，下载完成后放在一个单独的文件夹内。
 
 ## 使用方法
 1、使用命令行工具，可用参数如下：
@@ -47,7 +47,7 @@ pip install histcite-python
 $ 假设文件夹路径为/Users/.../downloads/dataset，来源为web of science, 引文网络图节点数设置为100
 $ histcite -f /Users/.../downloads/dataset -t wos -n 100
 ```
-> 结果保存在指定的 `folder_path` 下的 `result` 文件夹内，包含 statistics.xlsx, graph.node.xlsx, graph.dot 三个文件，第一个是描述统计表，第二个是引文网络图节点信息表，最后一个为引文网络图的数据文件，可以使用 [Graphviz在线编辑器](http://magjac.com/graphviz-visual-editor/) 或本地的 [Graphviz工具](https://graphviz.org/) 生成引文网络图。具体内容可以参考 [examples文件夹](examples)。 
+结果保存在指定的 `folder_path` 下的 `result` 文件夹内，包含 statistics.xlsx, graph.node.xlsx, graph.dot 三个文件，第一个是描述统计表，第二个是引文网络图节点信息表，最后一个为引文网络图的数据文件，可以使用 [Graphviz在线编辑器](http://magjac.com/graphviz-visual-editor/) 或本地的 [Graphviz工具](https://graphviz.org/) 生成引文网络图。具体内容可以参考 [examples文件夹](examples)。 
 
 生成的引文网络图：
 
@@ -55,14 +55,13 @@ $ histcite -f /Users/.../downloads/dataset -t wos -n 100
 
 对应的文献节点信息：
 
-|  |      AU       |  PY  | SO                                               |  VL  |  BP  |
-| :-------: | :-----------: | :--: | :----------------------------------------------- | :--: | :--: |
-|    31     |    Iyer R     | 1997 | IEEE SIGNAL PROCESSING LETTERS                   |  4   | 221  |
-|    58     |    Iyer RM    | 1999 | IEEE TRANSACTIONS ON SPEECH AND AUDIO PROCESSING |  7   |  30  |
-|    68     |    Iver R     | 1999 | COMPUTER SPEECH AND LANGUAGE                     |  13  | 267  |
-|    77     | Bellegarda JR | 2000 | IEEE TRANSACTIONS ON SPEECH AND AUDIO PROCESSING |  8   |  76  |
-|    82     | Bellegarda JR | 2000 | PROCEEDINGS OF THE IEEE                          |  88  | 1279 |
-|    ...    |               |      |                                                  |      |      |
+|    | AU            |   PY | SO                                               |   VL |   BP |   LCS |   GCS |
+|------------:|:--------------|-----:|:-------------------------------------------------|-----:|-----:|------:|------:|
+|          31 | Iyer R        | 1997 | IEEE SIGNAL PROCESSING LETTERS                   |    4 |  221 |     5 |    24 |
+|          58 | Iyer RM       | 1999 | IEEE TRANSACTIONS ON SPEECH AND AUDIO PROCESSING |    7 |   30 |    10 |    55 |
+|          68 | Iver R        | 1999 | COMPUTER SPEECH AND LANGUAGE                     |   13 |  267 |     7 |    14 |
+|          77 | Bellegarda JR | 2000 | IEEE TRANSACTIONS ON SPEECH AND AUDIO PROCESSING |    8 |   76 |     7 |    43 |
+|          82 | Bellegarda JR | 2000 | PROCEEDINGS OF THE IEEE                          |   88 | 1279 |    15 |   210 |
 
 2、函数调用，相比命令行工具，函数调用更加灵活，可以自定义更多参数，参考 [demo.ipynb](demo.ipynb)
 
@@ -99,7 +98,8 @@ with open(os.path.join(folder_path,'result','graph.dot'), 'w') as f:
 graph_node_file = graph.generate_graph_node_file()
 graph_node_file.to_excel(os.path.join(folder_path,'result','graph.node.xlsx'),index=False)
 ```
-> 注：`generate_dot_file` 函数的 `allow_external_node` 参数表示引文网络节点中是否允许出现 `doc_indices` 之外的节点文献，`doc_indices` 一般为 `LCS` 比较高的文献，这些文献同样会参考低 `LCS` 的文献，或被低 `LCS` 的文献引用，因此如果将 `allow_external_node` 设置为 `True`, 引文网络图中将会出现这些低 `LCS` 的文献节点，默认为 `False`。
+>⚠️ `generate_dot_file` 函数的 `allow_external_node` 参数表示引文网络节点中是否允许出现 `doc_indices` 之外的节点文献，`doc_indices` 一般为 `LCS` 比较高的文献，这些文献同样会参考低 `LCS` 的文献，或被低 `LCS` 的文献引用，因此如果将 `allow_external_node` 设置为 `True`，引文网络图中将会出现这些低 `LCS` 的文献节点，默认为 `False`。  
+⚠️ 没有边的节点不会出现在引文网络图中，文献节点数量可能会低于 `doc_indices` 的数量。
 
 ## 工具对比：
 | 对比项 | [histcite-python](https://github.com/doublessay/histcite-python) | [histcite pro](https://zhuanlan.zhihu.com/p/20902898) |
