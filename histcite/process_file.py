@@ -75,7 +75,7 @@ class ProcessFile:
         # 提取一作
         first_au = df['AU'].apply(ProcessWosFile.extract_first_author)
         df.insert(1,'first_AU',first_au)
-        df['file source'] = file_name
+        df['source file'] = file_name
         return df
     
     def _read_cssci_file(self,file_name:str)->pd.DataFrame:
@@ -105,18 +105,18 @@ class ProcessFile:
         df['C3'] = df['C3'].apply(ProcessCssciFile.process_org)
         df['CR'] = df['CR'].str.replace('\n','; ')
         df['NR'] = df['CR'].str.count('; ')
-        df['file source'] = file_name
+        df['source file'] = file_name
         return df
     
     def _read_scopus_file(self,file_name:str)->pd.DataFrame:
         """读取scopus表单"""
-        use_cols = ['Authors','Title','Year','Source title','Volume','Issue','Cited by','DOI','Affiliations','Author Keywords','References','Document Type','EID']
+        use_cols = ['Authors','Author full names','Title','Year','Source title','Volume','Issue','Cited by','DOI','Affiliations','Author Keywords','References','Document Type','EID']
         file_path = os.path.join(self.folder_path,file_name)
         df = ReadFile._read_csv(file_path,use_cols)
-        df.columns = ['AU','TI','PY','SO','VL','IS','TC','DI','C3','DE','CR','DT','EID']
+        df.columns = ['AU','Author full names','TI','PY','SO','VL','IS','TC','DI','C3','DE','CR','DT','EID']
         df['NR'] = df['CR'].str.count('; ')
         df['first_AU'] = ProcessScopusFile.extract_first_author(df['AU'])
-        df['file source'] = file_name
+        df['source file'] = file_name
         return df
     
     def concat_table(self):

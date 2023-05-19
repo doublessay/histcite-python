@@ -30,21 +30,26 @@ class ComputeMetrics:
             grouped_df = grouped_df.rename(columns={col: 'Recs', 'LCS': 'TLCS', 'TC': 'TGCS'})
         elif 'LCS' in use_cols and 'TC' not in use_cols:
             grouped_df = df.groupby(col).agg({col: 'count', 'LCS': 'sum'})
-            grouped_df = grouped_df.rename(columns={col: 'Recs', 'LCS': 'TLCS'})
+            grouped_df.rename(columns={col: 'Recs', 'LCS': 'TLCS'}, inplace=True)
         elif 'LCS' not in use_cols and 'TC' not in use_cols:
             grouped_df = df.groupby(col).agg({col: 'count'}).rename(columns={col: 'Recs'})
         else:
             raise ValueError('Invalid columns list')
+
+        if col == 'Author full names':
+            grouped_df.index = grouped_df.index.str.replace(r'\(\d+\)','',regex=True)
         return grouped_df.sort_values('Recs', ascending=False)
-    
+
     def _generate_author_table(self):
-        if self.source_type in ['wos','scopus']:
+        if self.source_type == 'wos':
             use_cols = ['AU','LCS','TC']
         elif self.source_type == 'cssci':
             use_cols = ['AU','LCS']
+        elif self.source_type == 'scopus':
+            use_cols = ['Author full names','LCS','TC']
         else:
             raise ValueError('Invalid source type')
-        return self.__generate_table(use_cols,'AU','; ')
+        return self.__generate_table(use_cols,use_cols[0],'; ')
     
     def _generate_keywords_table(self):
         if self.source_type in ['wos','scopus']:
@@ -56,7 +61,7 @@ class ComputeMetrics:
         return self.__generate_table(use_cols,'DE','; ',True)
     
     def _generate_institution_table(self):
-        if self.source_type == 'wos':
+        if self.source_type in ['wos','scopus']:
             use_cols = ['C3','LCS','TC']
         elif self.source_type == 'cssci':
             use_cols = ['C3','LCS']
@@ -67,9 +72,9 @@ class ComputeMetrics:
     def _generate_records_table(self):
         """生成文献简表"""
         if self.source_type in ['wos','scopus']:
-            use_cols = ['AU','TI','SO','PY','LCS','TC','LCR','NR','file source']
+            use_cols = ['AU','TI','SO','PY','LCS','TC','LCR','NR','source file']
         elif self.source_type == 'cssci':
-            use_cols = ['AU','TI','SO','PY','LCS','LCR','NR','file source']
+            use_cols = ['AU','TI','SO','PY','LCS','LCR','NR','source file']
         else:
             raise ValueError('Invalid source type')
         records_table = self.docs_table[use_cols]
