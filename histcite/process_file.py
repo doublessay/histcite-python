@@ -42,7 +42,7 @@ class ProcessFile:
     def __init__(self,folder_path:str,source_type:str):
         """
         folder_path: 文件夹路径\n
-        source_type: 数据来源 wos|cssci|scopus|pubmed
+        source_type: 数据来源 wos|cssci|scopus
         """
         self.folder_path = folder_path
         self.source_type = source_type

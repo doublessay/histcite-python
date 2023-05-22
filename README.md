@@ -8,16 +8,16 @@
 
 核心功能：
 - 生成引文网络图；
-- 生成统计数据，其中包括文献、作者、机构、文献来源、作者关键词等；  
-- 发现不在本地文献集中、但被本地文献集引用较多的文献；
+- 生成统计数据，包括文献、作者、机构、文献来源、作者关键词等分析对象；  
+- 发现不在本地文献集中、但被本地文献集引用较多的文献，即本次文献获取过程忽略的重要文献；
 
 术语说明：
-- `GCS`, Global Citation Score， 表示一篇文献在 Web of Science核心合集中的总被引次数；
-- `LCS`, Local Citation Score，表示一篇文献在本地论文集中的被引次数；
-- `GCR`, Global Cited References，表示一篇文献所有参考文献的数量；
-- `LCR`, Local Cited References，表示一篇文献所有本地参考文献的数量；
-- `T*`, Total，表示给定作者、机构、期刊等相应分数之和。例如 `TLCS` = 总本地引文数；
-- `Recs`， 记录数；
+- `GCS`，Global Citation Score， 表示一篇文献在 Web of Science核心合集中的总被引次数；
+- `LCS`，Local Citation Score，表示一篇文献在本地论文集中的被引次数；
+- `GCR`，Global Cited References，表示一篇文献所有参考文献的数量；
+- `LCR`， Local Cited References，表示一篇文献所有本地参考文献的数量；
+- `T*`，Total，表示给定作者、机构、期刊等相应分数之和。例如 `TLCS` = 总本地引文数；
+- `Recs`，记录数；
 - `Web of Science` 题录数据 [字段说明](https://images.webofknowledge.com/WOKRS5132R4.2/help/zh_CN/WOS/hs_wos_fieldtags.html)；
 - 其他来源的题录数据会沿用 `Web of Science` 的字段命名格式；
 
@@ -28,7 +28,7 @@
 | 是否跨平台 | 是 | 否，仅限 Windows |
 | 是否支持其他数据源 | 是 | 否，仅限 Web of Science |
 | 是否提供前端界面 | 否 | 是 |
-| 引文网络图 | 矢量图，比较清晰 | 位图，比较粗糙 |
+| 引文网络图 | 矢量图，比较清晰 | 位图，比较模糊 |
 
 ## 快速开始
 ```console
@@ -42,6 +42,7 @@ pip install histcite-python
 | `Web of Science` | `核心合集`，格式选择 `Tab delimited file/制表符分隔文件`，导出内容选择 `Full Record and Cited References/全记录与引用的参考文献` 或者是 `Custome selection/自定义选择项`，全选字段。 |
 | `CSSCI` | 从 `CSSCI数据库` 正常导出即可。 |
 | `Scopus` | 格式选择 `CSV` 文件，导出字段需要额外勾选 `Author keywords` 和 `Include references`，或者直接全选字段。 |
+
 >⚠️ 文件下载之后不要改名(会根据文件名识别有效的题录数据文件)，下载完成后放在一个单独的文件夹内。
 
 ## 使用方法
@@ -113,14 +114,19 @@ graph_node_file.to_excel(os.path.join(folder_path,'result','graph.node.xlsx'),in
 ## 实现细节
 |  | Web of Science | CSSCI | Scopus|
 | --- | --- | --- | --- |
-| 如何识别引文关系 | 如果存在 `DOI`，则优先使用 `DOI` 进行匹配；否则通过 `一作`、`发表年份`、`文献来源`、`开始页` 进行判断  | 通过 `一作 `和 `题名` 进行判断 | 通过 `一作 `和 `题名` 进行判断 |
+| 如何识别引文关系 | 如果存在 `DOI`，则优先使用 `DOI` 进行匹配；否则通过 `一作`、`发表年份`、`文献来源`、`开始页` 进行判断  | 通过 `一作` 和 `题名` 进行判断 | 通过 `一作` 和 `题名` 进行判断 |
 | 如何去重 | 根据 `UT` 入藏号进行去重 | 根据 `一作` 和 `题名` 字段进行去重 | 根据 `EID` 字段进行去重 |
 
 ## Q&A
 1、为什么选取 `LSC` 最高的100篇文献，但是引文网络图及图节点文件中的节点数量少于100？  
-答：考虑到实用性和美观性，程序会自动忽略没有边的节点。即这些选中的文献没有引用其他选中的文献，或被这些文献引用。
+答：考虑到实用性和美观性，程序会自动忽略没有边的节点。即这些选中的文献没有引用其他选中的文献，或被这些文献引用。  
+
+2、每次必须指定一种数据库来源吗？  
+答：是的。不同来源数据库的参考文献字段包含的内容不同，解析方式不同，引文识别方式也不同，需要单独处理。
+
+3、为什么不支持 `CNKI`、`PubMed` 等数据库的题录数据？  
+答：无法导出参考文献字段或引文字段，也就无法识别引文关系。如果需要支持其他数据库，欢迎提交issue。
 
 ## TODO
 - [x] 支持 `CSSCI` 题录数据
 - [x] 支持 `Scopus` 题录数据
-- [ ] 支持 `PubMed` 题录数据
