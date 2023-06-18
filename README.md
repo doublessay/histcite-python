@@ -1,6 +1,6 @@
 # HistCite工具的Python实现
 
-由于原引文分析工具 [HistCite](https://support.clarivate.com/ScientificandAcademicResearch/s/article/HistCite-No-longer-in-active-development-or-officially-supported) 已停止维护，目前国内普遍使用的为国科大某位同学在原程序基础上进行修复的版本 [HistCite Pro](https://zhuanlan.zhihu.com/p/20902898)，仅能在 `Windows` 平台上运行，存在诸多限制。借助 [pandas 2.0](https://pandas.pydata.org/docs/dev/whatsnew/v2.0.0.html) 和可视化工具 [Graphviz](https://graphviz.org)，本工具复刻了原 `HistCite` 的大部分功能，同时拓展了对其他数据源的支持，可以跨平台使用。
+由于原引文分析工具 [HistCite](https://support.clarivate.com/ScientificandAcademicResearch/s/article/HistCite-No-longer-in-active-development-or-officially-supported) 已停止维护，目前国内普遍使用的为中科大某位同学在原程序基础上进行修复的版本 [HistCite Pro](https://zhuanlan.zhihu.com/p/20902898)，仅能在 `Windows` 平台上运行，存在诸多限制。借助 [pandas 2.0](https://pandas.pydata.org/docs/dev/whatsnew/v2.0.0.html) 和可视化工具 [Graphviz](https://graphviz.org)，本工具复刻了原 `HistCite` 的大部分功能，同时拓展了对其他数据源的支持，可以跨平台使用。
 
 最近更新：
 - `v0.3.0` 增加了对 `Scopus` 数据库题录数据的支持；
@@ -57,6 +57,8 @@ pip install histcite-python
 ```console
 $ 假设文件夹路径为/Users/.../downloads/dataset，来源为web of science, 引文网络图节点数设置为100
 $ histcite -f /Users/.../downloads/dataset -t wos -n 100
+$ 或者是
+$ histcite --folder_path /Users/.../downloads/dataset --source_type wos --node_num 100
 ```
 >注：结果保存在指定的 `folder_path` 下的 `result` 文件夹内，包含 statistics.xlsx, graph.node.xlsx, graph.dot 三个文件，第一个是描述统计表，第二个是引文网络图节点信息表，最后一个为引文网络图的数据文件，可以使用 [Graphviz在线编辑器](http://magjac.com/graphviz-visual-editor/) 或本地的 [Graphviz工具](https://graphviz.org/) 生成引文网络图。具体内容可以参考 [examples文件夹](examples)。 
 
@@ -125,7 +127,7 @@ graph_node_file.to_excel(os.path.join(folder_path,'result','graph.node.xlsx'),in
 答：是的。不同来源数据库的参考文献字段包含的内容不同，解析方式不同，引文识别方式也不同，需要单独处理。
 
 3、为什么不支持 `CNKI`、`PubMed` 等数据库的题录数据？  
-答：无法导出参考文献字段或引文字段，也就无法识别引文关系。如果需要支持其他数据库，欢迎提交issue。
+答：无法导出参考文献或引文字段信息，也就无法识别引文关系。如果需要支持其他数据库，欢迎提交issue。
 
 ## TODO
 - [x] 支持 `CSSCI` 题录数据
